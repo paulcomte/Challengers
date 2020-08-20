@@ -1,14 +1,15 @@
 package fr.rqndomhax.challengers.managers.team;
 
+import fr.rqndomhax.challengers.managers.PlayerData;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 public class TeamData {
 
-    private UUID vip;
     private final TeamList team;
-    private Set<UUID> members = new HashSet<>();
+    private Set<PlayerData> members = new HashSet<>();
     private int teamPoints;
     private final int teamMaxSize;
     private int teamSize = 0;
@@ -30,11 +31,11 @@ public class TeamData {
         return team;
     }
 
-    public Set<UUID> getMembers() {
+    public Set<PlayerData> getMembers() {
         return members;
     }
 
-    public void setMembers(Set<UUID> members) {
+    public void setMembers(Set<PlayerData> members) {
         this.members = members;
     }
 
@@ -62,4 +63,7 @@ public class TeamData {
         teamSize = teamSize - i;
     }
 
+    public Set<UUID> getBodyGuards() {
+        return bodyGuards;
+    }
 }

@@ -50,14 +50,14 @@ public class VipSelect implements CommandExecutor {
         Inventory pInv = Bukkit.createInventory(null, 9, "Séléction d'un VIP");
 
         // Add players head
-        Set<UUID> playersteam = setup.getTm().getTeam(setup.getGm().getPlayerData(p.getUniqueId()).getTeam()).getMembers();
+        Set<UUID> playerTeam = setup.getTm().getTeam(setup.getGm().getPlayerData(p.getUniqueId()).getTeam()).getMembers();
 
-        if(playersteam.isEmpty()) {
+        if(playerTeam.isEmpty()) {
             p.sendMessage("Erreur interne, l'équipe est vide ! Veuillez contacter le développeur: §a_Paul#6918");
             return false;
         }
 
-        for(UUID players : playersteam) {
+        for(UUID players : playerTeam) {
             pInv.addItem(new ItemBuilder(Material.SKULL_ITEM, 1, (short)3)
                     .setSkullOwner(players)
                     .setName(ChatColor.GOLD + "Voter pour » " + Bukkit.getOfflinePlayer(players).getName())

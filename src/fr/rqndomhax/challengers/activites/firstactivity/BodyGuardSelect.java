@@ -1,6 +1,7 @@
 package fr.rqndomhax.challengers.activites.firstactivity;
 
 import fr.rqndomhax.challengers.core.Setup;
+import fr.rqndomhax.challengers.managers.PlayerData;
 import fr.rqndomhax.challengers.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import java.util.Set;
-import java.util.UUID;
 
 public class BodyGuardSelect implements CommandExecutor {
 
@@ -32,12 +32,18 @@ public class BodyGuardSelect implements CommandExecutor {
 
         Player p = (Player) sender;
 
+        PlayerData playerData = setup.getGm().getPlayerData(p.getUniqueId());
+
+        if(playerData == null) {
+            p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.NotPlaying")));
+            return false;
+        }
 
         if (setup.getGm().getGame().isBodyGuardCooldownFinished()) {
             p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.BodyGuard.FinishedBG")));
         }
 
-        if (!(setup.getTm().hasTeam(p.getUniqueId()))) {
+        if (!(setup.getTm().hasTeam(playerData))) {
             p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.Teams.NeedToBeInTeam")));
             return false;
         }
@@ -50,17 +56,17 @@ public class BodyGuardSelect implements CommandExecutor {
         Inventory pInv = Bukkit.createInventory(null, 9, "Séléction de garde du corps");
 
         // Add players head
-        Set<UUID> playersteam = setup.getTm().getTeam(setup.getGm().getPlayerData(p.getUniqueId()).getTeam()).getMembers();
+        Set<PlayerData> playersteam = playerData.getTeamData().getMembers();
 
         if (playersteam.isEmpty()) {
             p.sendMessage("Erreur interne, l'équipe est vide ! Veuillez contacter le développeur: §a_Paul#6918");
             return false;
         }
 
-        for (UUID players : playersteam) {
+        for (PlayerData playerDatas : playersteam) {
             pInv.addItem(new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3)
-                    .setSkullOwner(players)
-                    .setName(ChatColor.GOLD + "Choisir » " + Bukkit.getOfflinePlayer(players).getName())
+                    .setSkullOwner(playerData.getUuid())
+                    .setName(ChatColor.GOLD + "Choisir » " + playerData.getName())
                     .toItemStack());
         }
 

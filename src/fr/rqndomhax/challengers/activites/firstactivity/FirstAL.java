@@ -1,6 +1,7 @@
 package fr.rqndomhax.challengers.activites.firstactivity;
 
 import fr.rqndomhax.challengers.core.Setup;
+import fr.rqndomhax.challengers.managers.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -8,8 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-
-import java.util.UUID;
 
 public class FirstAL implements Listener {
 
@@ -35,17 +34,17 @@ public class FirstAL implements Listener {
         if(!(e.getCurrentItem().hasItemMeta())) return;
 
         String vote = e.getCurrentItem().getItemMeta().getDisplayName().substring(15);
-        UUID voteP = null;
+        PlayerData voteP = null;
 
-        for(UUID users : setup.getTm().getTeam(setup.getTm().getPlayerTeam(p.getUniqueId()).getTeam()).getMembers()) {
+        for(PlayerData playerDatas : setup.getGm().getPlayerData(p.getUniqueId()).getTeamData().getMembers()) {
 
-            if(Bukkit.getOfflinePlayer(users).getName().equalsIgnoreCase(vote)) {
-                voteP = users;
+            if(playerDatas.getName().equalsIgnoreCase(vote)) {
+                voteP = playerDatas;
             }
 
         }
 
-        setup.getFm().addVipVote(voteP, 1);
+        setup.getFm().addVipVote(, 1);
         setup.getFm().getPVoting().add(p.getUniqueId());
 
         p.closeInventory();
@@ -68,21 +67,46 @@ public class FirstAL implements Listener {
 
         if(!(e.getCurrentItem().hasItemMeta())) return;
 
-        String selected = e.getCurrentItem().getItemMeta().getDisplayName().substring(15);
-        UUID userSelected = null;
+        e.setCancelled(true);
 
-        for(UUID users : setup.getTm().getTeam(setup.getTm().getPlayerTeam(p.getUniqueId()).getTeam()).getMembers()) {
+        String selected = e.getCurrentItem().getItemMeta().getDisplayName().substring(12);
+        PlayerData userSelected = null;
 
-            if(Bukkit.getOfflinePlayer(users).getName().equalsIgnoreCase(selected)) {
-                userSelected = users;
+        PlayerData playerData = setup.getGm().getPlayerData(p.getUniqueId());
+
+        for(PlayerData playerDatas : playerData.getTeamData().getMembers()) {
+
+            /*if(Bukkit.getOfflinePlayer(users).getName().equalsIgnoreCase(p.getName())) {
+                p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.CannotVoteForYourself")));
+                return;
+            }
+             */
+
+            if(playerDatas.getName().equalsIgnoreCase(selected)) {
+
+                if(setup.getbG().getBodyguards().contains(setup.getGm().getPlayerData(selected))) {
+                    p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.BodyGuard.AlreadySelectedAsBG").replace("%player%", playerDatas.getName())));
+                    return;
+                }
+
+                userSelected = playerDatas;
             }
 
         }
 
-        setup.getFm().getbSelected().add(userSelected);
+        if(userSelected == null) {
+            p.sendMessage("WARNING : UUID IS NULL, PLEASE CONTACT THE DEVELOPER §e_Paul#6918 §fIF THAT HAPPENS AGAIN !");
+            return;
+        }
 
-        p.closeInventory();
-        p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.BodyGuard.Selected").replace("%player", Bukkit.getOfflinePlayer(userSelected).getName())));
+        setup.getbG().getBodyguards().put(playerData.getTeamData(), userSelected);
+
+        p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.BodyGuard.Selected").replace("%player%", userSelected.getName())));
+
+        if(setup.getbG().getBodyguards().size() == 2) {
+            setup.getbG().getVotes().add(playerData);
+            p.closeInventory();
+        }
 
     }
 

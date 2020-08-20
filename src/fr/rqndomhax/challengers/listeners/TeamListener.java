@@ -1,6 +1,7 @@
 package fr.rqndomhax.challengers.listeners;
 
 import fr.rqndomhax.challengers.core.Setup;
+import fr.rqndomhax.challengers.managers.PlayerData;
 import fr.rqndomhax.challengers.managers.team.TeamList;
 import fr.rqndomhax.challengers.utils.ItemBuilder;
 import org.bukkit.Bukkit;
@@ -15,8 +16,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.UUID;
 
 public class TeamListener implements Listener {
 
@@ -36,6 +35,11 @@ public class TeamListener implements Listener {
         if (e.getItem().getType() != Material.BANNER) return;
         if (!e.getItem().getItemMeta().getDisplayName().substring(2).equalsIgnoreCase("Séléction d'équipe")) return;
 
+        if(setup.getGm().getPlayerData(e.getPlayer().getUniqueId()) == null) {
+            e.getPlayer().sendMessage(this.a(setup.getCore().getConfig().getString("Messages.NotPlaying")));
+            return;
+        }
+
         e.setCancelled(true);
 
         // New inventory
@@ -44,7 +48,7 @@ public class TeamListener implements Listener {
         // Set items in inventory
         for(TeamList teams : TeamList.values()) {
 
-            if (setup.getGm().getPlayerData(e.getPlayer().getUniqueId()).getTeam() == teams) {
+            if (setup.getGm().getPlayerData(e.getPlayer().getUniqueId()).getTeamData().getTeam() == teams) {
                 teamSelect.setItem(teams.getSlot(), new ItemBuilder(Material.BANNER).setBannerColor(teams.getDyeColor())
                         .setName(teams.getChatColor() + "Equipe " + teams.getName().toLowerCase())
                         .addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1).hideEnchants()
@@ -101,7 +105,7 @@ public class TeamListener implements Listener {
         }
 
         p.closeInventory();
-        setup.getTm().autoSetTeam(p.getUniqueId(), team);
+        setup.getTm().addToTeam(setup.getGm().getPlayerData(p.getUniqueId()), team);
         p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.Teams.JoinedTheTeam")
                 .replace("%teamcolor%", team.getChatColor() + "")
                 .replace("%team%", team.getName())));
@@ -111,9 +115,9 @@ public class TeamListener implements Listener {
 
         StringBuilder sb = new StringBuilder();
 
-        for(UUID users : setup.getTm().getTeam(team).getMembers()) {
+        for(PlayerData playerDatas : setup.getTm().getTeam(team).getMembers()) {
 
-            sb.append(team.getChatColor()).append("• ").append(Bukkit.getOfflinePlayer(users).getName());
+            sb.append(team.getChatColor()).append("• ").append(playerDatas.getName());
 
         }
 

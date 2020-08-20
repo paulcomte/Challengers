@@ -36,128 +36,6 @@ public class FirstM {
     // New HashSet of vip who chose bodyguards
     private final Set<UUID> bSelected = new HashSet<>();
 
-    public void addVipVote(UUID user, int i) {
-
-        switch(setup.getTm().getPlayerTeam(user).getTeam()) {
-            case CYAN:
-                pBlue.put(user, pBlue.getOrDefault(user, 0) + i);
-                break;
-            case RED:
-                pRed.put(user, pRed.getOrDefault(user, 0) + i);
-                break;
-            case GREEN:
-                pGreen.put(user, pGreen.getOrDefault(user, 0) + i);
-                break;
-            case YELLOW:
-                pYellow.put(user, pYellow.getOrDefault(user, 0) + i);
-                break;
-            default: break;
-        }
-    }
-
-    public void removeVipVote(UUID user, int i) {
-
-        switch(setup.getTm().getPlayerTeam(user).getTeam()) {
-            case CYAN:
-                pBlue.put(user, pBlue.getOrDefault(user, 0) - i);
-                break;
-            case RED:
-                pRed.put(user, pRed.getOrDefault(user, 0) - i);
-                break;
-            case GREEN:
-                pGreen.put(user, pGreen.getOrDefault(user, 0) - i);
-                break;
-            case YELLOW:
-                pYellow.put(user, pYellow.getOrDefault(user, 0) - i);
-                break;
-            default: break;
-        }
-
-    }
-
-    public void setVipVote(UUID uuid, int i) {
-
-        switch(setup.getTm().getPlayerTeam(uuid).getTeam()) {
-            case CYAN:
-                pBlue.put(uuid, i);
-                break;
-            case RED:
-                pRed.put(uuid, i);
-                break;
-            case GREEN:
-                pGreen.put(uuid, i);
-                break;
-            case YELLOW:
-                pYellow.put(uuid, i);
-                break;
-            default: break;
-        }
-
-    }
-
-    public HashMap<UUID, Integer> getVipVotes(UUID user) {
-        switch (setup.getTm().getPlayerTeam(user).getTeam()) {
-            case CYAN:
-                return pBlue;
-
-            case RED:
-                return pRed;
-
-            case YELLOW:
-                return pYellow;
-
-            case GREEN:
-                return pGreen;
-
-            default:
-                return null;
-        }
-    }
-
-    public int getVipPlayerVotes(UUID uuid) {
-        return getVipVotes(uuid).get(uuid);
-    }
-
-    public void setVip(UUID uuid) {
-        VIP.add(uuid);
-    }
-
-    public UUID getTeamVIP(TeamList team) {
-        HashMap<UUID, Integer> votes = new HashMap<>();
-
-        for (UUID users : VIP) {
-
-            if(setup.getGm().getPlayerData(users).getTeam() != team) continue;
-
-            votes.put(users, getVipVotes(users).getOrDefault(users, 0));
-        }
-
-        Map.Entry<UUID, Integer> entry = Collections.max(votes.entrySet(), Comparator.comparingInt(Map.Entry::getValue));
-
-        List<UUID> uuids = new ArrayList<>();
-
-        for (Map.Entry entry1 : votes.entrySet()) {
-            UUID uuid = (UUID) entry1.getKey();
-            Integer integer = (Integer) entry1.getValue();
-
-            if (uuid.equals(entry.getKey())) continue;
-
-            if (entry.getValue() == integer.intValue()) {
-                UUID firstUUID = entry.getKey();
-                uuids.add(firstUUID);
-            }
-
-        }
-
-        if(uuids.isEmpty()) {
-            return entry.getKey();
-        }
-
-        uuids.add(entry.getKey());
-        Random r = new Random();
-        int b = r.nextInt(uuids.size());
-        return uuids.get(b);
-    }
 
     public Set<UUID> getPVoting() {
         return pVoting;
@@ -181,6 +59,27 @@ public class FirstM {
 
     public ArrayList<UUID> getbYellow() {
         return bYellow;
+    }
+
+    public ArrayList<UUID> getBFromTeam(TeamList team) {
+
+        switch(team) {
+
+            case RED:
+                return bRed;
+
+            case CYAN:
+                return bBlue;
+
+            case GREEN:
+                return bGreen;
+
+            case YELLOW:
+                return bYellow;
+
+        }
+
+        return null;
     }
     
     public void teleport() {

@@ -4,8 +4,6 @@ import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
 import org.bukkit.Bukkit;
 
-import java.util.UUID;
-
 
 public class TeamManager {
 
@@ -16,18 +14,21 @@ public class TeamManager {
         this.setup = setup;
     }
 
-    // Auto set a player to a team
-    public void autoSetTeam(UUID user, TeamList team) {
-        addToTeam(user, team);
-    }
-
     // Method to add the player to a team.
-    public void addToTeam(UUID user, TeamList team){
-        if (hasTeam(user)) removeFromTeam(user);
-        setup.getGm().getPlayerData(user).setTeam(team);
-        getTeam(team).addTeamSize(1);
-        if(Bukkit.getOfflinePlayer(user).isOnline())
-            Bukkit.getPlayer(user).setDisplayName(team.getChatColor() + Bukkit.getPlayer(user).getName());
+    public void addToTeam(PlayerData playerData, TeamList team){
+        if (hasTeam(playerData)) removeFromTeam(playerData);
+
+        playerData.setTeamData(getTeam(team));
+
+        playerData.getTeamData().getMembers().add(playerData);
+
+        playerData.getTeamData().addTeamSize(1);
+
+
+        if(Bukkit.getOfflinePlayer(playerData.getUuid()).isOnline()) {
+            Bukkit.getPlayer(playerData.getUuid()).setDisplayName(team.getChatColor() + playerData.getName());
+        }
+
     }
 
     // Checking if time size is exceeded
@@ -36,33 +37,22 @@ public class TeamManager {
     }
 
     // Removing the player from a team
-    public void removeFromTeam(UUID user){
-        PlayerData player = setup.getGm().getPlayerData(user);
+    public void removeFromTeam(PlayerData playerData){
 
-        if(Bukkit.getOfflinePlayer(user).isOnline())
-            Bukkit.getPlayer(user).setDisplayName(player.getName());
+        playerData.getTeamData().getMembers().remove(playerData);
 
-        getPlayerTeam(user).removeTeamSize(1);
+        playerData.getTeamData().removeTeamSize(1);
 
-        player.setTeam(null);
+        playerData.setTeamData(null);
 
-    }
+        if(Bukkit.getOfflinePlayer(playerData.getUuid()).isOnline())
+            Bukkit.getPlayer(playerData.getUuid()).setDisplayName(playerData.getName());
 
-    // Getting the player's team
-    public TeamData getPlayerTeam(UUID user){
-        for(TeamData teams : team.getTeams()) {
-
-            if(setup.getGm().getPlayerData(user).getTeam() != teams.getTeam()) continue;
-
-            return teams;
-
-        }
-        return null;
     }
 
     // Check if player is in team
-    public boolean hasTeam(UUID user) {
-        return setup.getGm().getPlayerData(user).getTeam() != null;
+    public boolean hasTeam(PlayerData playerData) {
+        return playerData.getTeamData() != null;
     }
 
     // Get team from teamlist
@@ -80,21 +70,21 @@ public class TeamManager {
     }
 
     // Add player points and player's team
-    public void autoAddPoints(UUID user, int i) {
-        setup.getGm().getPlayerData(user).setPlayerPoints(setup.getGm().getPlayerData(user).getPlayerPoints() + i);
-        getPlayerTeam(user).setTeamPoints(getPlayerTeam(user).getTeamPoints() + i);
+    public void autoAddPoints(PlayerData playerData, int i) {
+        playerData.setPlayerPoints(playerData.getPlayerPoints() + i);
+        playerData.getTeamData().setTeamPoints(playerData.getTeamData().getTeamPoints() + i);
     }
 
     // Remove player points and player's team
-    public void autoRemovePoints(UUID user, int i) {
-        setup.getGm().getPlayerData(user).setPlayerPoints(setup.getGm().getPlayerData(user).getPlayerPoints() - i);
-        getPlayerTeam(user).setTeamPoints(getPlayerTeam(user).getTeamPoints() - i);
+    public void autoRemovePoints(PlayerData playerData, int i) {
+        playerData.setPlayerPoints(playerData.getPlayerPoints() - i);
+        playerData.getTeamData().setTeamPoints(playerData.getTeamData().getTeamPoints() - i);
     }
 
     // Remove player points and player's team
-    public void autoSetPoints(UUID user, int i) {
-        setup.getGm().getPlayerData(user).setPlayerPoints(i);
-        getPlayerTeam(user).setTeamPoints((getPlayerTeam(user).getTeamPoints() - setup.getGm().getPlayerData(user).getPlayerPoints()) + i);
+    public void autoSetPoints(PlayerData playerData, int i) {
+        playerData.setPlayerPoints(i);
+        playerData.getTeamData().setTeamPoints(playerData.getTeamData().getTeamPoints() - playerData.getPlayerPoints()+ i);
     }
 
     // Add team points

@@ -6,5 +6,8 @@ commands:
   ac:
     aliases: [activity]
     description: Gère les activités
-  vipselect:
+  vip:
     description: Affiche le menu de vote pour un vip
+  bg:
+    aliases: [bodyguard]
+    description: Affiche le menu de vote pour un garde du corps

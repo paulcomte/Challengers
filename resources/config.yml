@@ -65,6 +65,8 @@ Messages:
   NotInstanced: "&4Erreur » Vous devez être un joueur pour pouvoir effectuer cette commande."
   # Message when the player doesn't exists
   NotValid: "&4Erreur » Le joueur specifié n'est pas connecté sur le serveur."
+  # Message when the player isn't playing
+  NotPlaying: "&4Erreur » Vous devez être un challenger afin d'effectuer cette action."
   # Message when the player is already instanced
   AlreadyPlaying: "&4Erreur » Le joueur &e%player% &4est déjà dans la liste des joueurs."
   # Message when the player is already not playing
@@ -120,6 +122,7 @@ Messages:
     # Timer in second, need to be a integer !
     TimerI: 240
     Teleported: "&aVous venez d'être téléporté pour la première épreuve. \nBonne chance !"
+    CannotVoteForYourself: "&4Erreur ! Vous ne pouvez pas voter pour vous-même"
     VIP:
       VoteVip: "&aVous avez voté pour &e%player%"
       AlreadyVoted: "&4Erreur » Vous avez déjà voté pour un VIP."
@@ -129,6 +132,7 @@ Messages:
     BodyGuard:
       AlreadySelected: "&4Erreur ! Vous avez déjà séléctionné vos deux gardes du corps."
       Selected: "&aVous avez voté pour %player% en tant qu'un de vos gardes du corps !"
+      AlreadySelectedAsBG: "&aVous avez déjà pour %player% en tant qu'un de vos gardes du corps !"
       FinishedBG: "&aLe choix des gardes du corps des VIP est terminé !"
       AnnounceWhoBG: "&aLe %number% garde du corp de l'équipe » %teamcolor%%team% est %teamcolor% %player% !"
 

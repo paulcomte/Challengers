@@ -1,6 +1,6 @@
 package fr.rqndomhax.challengers.managers;
 
-import fr.rqndomhax.challengers.managers.team.TeamList;
+import fr.rqndomhax.challengers.managers.team.TeamData;
 import org.bukkit.Bukkit;
 
 import java.util.UUID;
@@ -9,7 +9,7 @@ public class PlayerData {
 
     private String name;
     private UUID uuid;
-    private TeamList team = null;
+    private TeamData teamData = null;
     private int playerPoints = 0;
 
     public PlayerData(UUID uuid) {
@@ -33,12 +33,12 @@ public class PlayerData {
         this.uuid = uuid;
     }
 
-    public TeamList getTeam() {
-        return team;
+    public TeamData getTeamData() {
+        return teamData;
     }
 
-    public void setTeam(TeamList team) {
-        this.team = team;
+    public void setTeamData(TeamData teamData) {
+        this.teamData = teamData;
     }
 
     public int getPlayerPoints() {

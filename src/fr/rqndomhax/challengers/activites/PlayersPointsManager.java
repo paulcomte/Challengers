@@ -63,7 +63,7 @@ public class PlayersPointsManager {
 
         sender.sendMessage(this.a(autoReplace(setup.getCore().getConfig().getString("Messages.OldPoints"), playerData)));
 
-        setup.getTm().autoSetPoints(playerData.getUuid(), points);
+        setup.getTm().autoSetPoints(playerData, points);
 
         sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.GettingPoints")));
 
@@ -88,7 +88,7 @@ public class PlayersPointsManager {
 
         sender.sendMessage(this.a(autoReplace(setup.getCore().getConfig().getString("Messages.OldPoints"), playerData)));
 
-        setup.getTm().autoRemovePoints(playerData.getUuid(), points);
+        setup.getTm().autoRemovePoints(playerData, points);
 
         sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.GettingPoints")));
 
@@ -113,7 +113,7 @@ public class PlayersPointsManager {
 
         sender.sendMessage(this.a(autoReplace(setup.getCore().getConfig().getString("Messages.OldPoints"), playerData)));
 
-        setup.getTm().autoAddPoints(playerData.getUuid(), points);
+        setup.getTm().autoAddPoints(playerData, points);
 
         sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.GettingPoints")));
 
@@ -129,11 +129,11 @@ public class PlayersPointsManager {
     private String autoReplace(String message, PlayerData playerData) {
 
         return message
-                .replace("%team%", playerData.getTeam().getName())
-                .replace("%teamcolor%", playerData.getTeam().getChatColor() + "")
+                .replace("%team%", playerData.getTeamData().getTeam().getName())
+                .replace("%teamcolor%", playerData.getTeamData().getTeam().getChatColor() + "")
                 .replace("%player%", playerData.getName())
                 .replace("%playerpoints%", String.valueOf(playerData.getPlayerPoints()))
-                .replace("%teampoints%", String.valueOf(setup.getTm().getPlayerTeam(playerData.getUuid()).getTeamPoints()));
+                .replace("%teampoints%", String.valueOf(playerData.getTeamData().getTeamPoints()));
 
     }
 

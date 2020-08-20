@@ -8,7 +8,9 @@ public class PlayerChat implements Listener {
 
     @EventHandler
     public void onAsyncChat(AsyncPlayerChatEvent e) {
-        System.out.println(e.getFormat());;
+        // %1$s == player name
+        // %2$s == message
+        e.setFormat("%1$s §e» §f%2$s");
     }
 
 }
