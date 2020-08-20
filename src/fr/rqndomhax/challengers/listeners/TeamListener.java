@@ -78,13 +78,13 @@ public class TeamListener implements Listener {
         e.setCancelled(true);
 
         for(TeamList teams : TeamList.values()) {
-            if(e.getCurrentItem().getItemMeta().getDisplayName().substring(2).equalsIgnoreCase("Equipe " + teams.getName().toLowerCase()))
-                autoAction(p, teams.getName().toLowerCase(), clickedM, teams);
+            if(e.getCurrentItem().getItemMeta().getDisplayName().substring(2).equalsIgnoreCase("Equipe " + teams.getName()))
+                autoAction(p, clickedM, teams);
         }
     }
 
-    private void autoAction(Player p, String teamName, ItemMeta iM, TeamList team) {
-        if (!(iM.getDisplayName().substring(2).equalsIgnoreCase("Equipe " + teamName))) return;
+    private void autoAction(Player p, ItemMeta iM, TeamList team) {
+        if (!(iM.getDisplayName().substring(2).equalsIgnoreCase("Equipe " + team.getName()))) return;
 
         if (iM.hasEnchants()) {
             p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.Teams.AlreadyInTeam")
@@ -101,8 +101,8 @@ public class TeamListener implements Listener {
         }
 
         p.closeInventory();
-        this.setup.getTm().autoSetTeam(p.getUniqueId(), team);
-        p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.Teams.JoinedTeam")
+        setup.getTm().autoSetTeam(p.getUniqueId(), team);
+        p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.Teams.JoinedTheTeam")
                 .replace("%teamcolor%", team.getChatColor() + "")
                 .replace("%team%", team.getName())));
     }

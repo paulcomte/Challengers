@@ -74,7 +74,7 @@ public class TeamScoreboard {
                 "Point d'équipe : " + teamData.getTeamPoints(),
                 "",
                 "Joueurs : " + Bukkit.getServer().getOnlinePlayers().size(),
-                "Nombre de vos points : " + setup.getGm().getPlayerData(board.getPlayer().getUniqueId()).getPlayerpoints(),
+                "Nombre de vos points : " + setup.getGm().getPlayerData(board.getPlayer().getUniqueId()).getPlayerPoints(),
                 "",
                 "Kills: " + board.getPlayer().getStatistic(Statistic.PLAYER_KILLS),
                 ""

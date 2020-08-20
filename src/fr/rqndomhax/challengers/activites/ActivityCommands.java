@@ -65,10 +65,6 @@ public class ActivityCommands implements CommandExecutor {
 
                 return new PlayersManager(setup, sender, args).onRemove();
 
-            case "warningremove":
-
-                return new PlayersManager(setup, sender, args).onWarningRemove();
-
             case "setpoint":
 
                 return new PlayersPointsManager(setup, sender, args).onSetPoints();
@@ -163,17 +159,11 @@ public class ActivityCommands implements CommandExecutor {
                 break;
 
             default:
-                showHelp(sender, 1);
                 sender.sendMessage("Veuillez spécifier un nombre correct entre §e1 & 4");
                 break;
 
         }
 
     }
-
-    private String a(String a) {
-        return ChatColor.translateAlternateColorCodes('&', a);
-    }
-
 
 }

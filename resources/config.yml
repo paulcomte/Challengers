@@ -31,16 +31,6 @@
 #author: 尺Ɋ几ᗪㄖ爪卄卂乂
 #version: 1.0
 #last-update: 3:47 pm (UTC +2) - 08/19/2020 (MM/DD/YEAR)
-
-Parameters:
-  1:
-  # Parameter %teamcolor% to set text color as team color
-  # Parameter %team% to get the team name
-  # Parameter %player% to get the player name
-  2:
-  # Parameter %teamcolor% to set text color as team color
-  # Parameter %team% to get the team name
-
 Locations:
   # For coords string do : x, y, z
   Lobby:
@@ -65,49 +55,63 @@ Locations:
 
 
 Permissions:
-  # Permission to show help
-  ShowACHelp: "challengers.help.show"
   # Permission to use activity manager commands
   ActivityManager: "challengers.acmanager.use"
 
 Messages:
   # Message when the player hasn't the permission to run a command
-  NotAllowed: "&4Erreur ! Vous n'avez pas la permission d'éxécuter cette commande."
+  NotAllowed: "&4Erreur » Vous n'avez pas la permission d'éxécuter cette commande."
   # Message when a non player run the command
-  NotInstanced: "&4Erreur ! Vous devez être un joueur pour pouvoir effectuer cette commande."
+  NotInstanced: "&4Erreur » Vous devez être un joueur pour pouvoir effectuer cette commande."
   # Message when the player doesn't exists
-  NotValid: "&4Erreur ! Le joueur specifié n'est pas connecté sur le serveur."
+  NotValid: "&4Erreur » Le joueur specifié n'est pas connecté sur le serveur."
   # Message when the player is already instanced
-  AlreadyPlaying: "&4Erreur ! Le joueur &e%player% &4est déjà dans la liste des joueurs."
+  AlreadyPlaying: "&4Erreur » Le joueur &e%player% &4est déjà dans la liste des joueurs."
   # Message when the player is already not playing
-  AlreadyNotPlaying: "&4Erreur ! Le joueur &e%player% &4n'est déjà pas un challenger."
+  AlreadyNotPlaying: "&4Erreur » Le joueur &e%player% &4n'est déjà pas un challenger."
   # Message when a new player has been added
   NewPlayer: "&2Vous venez d'ajouter le joueur &e%player% à la liste des challengers !"
   # Message to the player when it has been added
   NewPlayerToMessage: "&2Vous venez d'être ajouté à la liste des challengers !"
+  # Message when the player has been removed
+  RemovedPlayer: "&2Vous venez de retirer &e%player% de la liste des challengers !"
   # Message to the player when it has been removed
   RemovedPlayerToMessage: "&2Vous venez d'être retiré de la liste des challengers !"
   # Message when the game is already running
-  AlreadyRunning: "&4Erreur ! Une activité est déjà en cours... Pour en forcer l'arrêt veuillez exécuter la commande &e/ac stop. &cPEUT CORROMPRE LE JEU."
+  AlreadyRunning: "&4Erreur » Une activité est déjà en cours... Pour en forcer l'arrêt veuillez exécuter la commande &e/ac stop. &cPEUT CORROMPRE LE JEU."
   # Message when the game is already not running
-  NotRunning: "&4Erreur ! Aucune activité n'est démarré."
+  NotRunning: "&4Erreur » Aucune activité n'est démarré."
   # Message when a player has started an activity
   ActivityStarted: "&2Vous venez de démarrer l'activité &e"
   # Message when the activity has been force stopped
-  ActivityForceStopped: "&2L'arrêt de l'activité a été forcé. Vous avez été téléporté au lobby"
+  ActivityForceStopped: "&2L'arrêt de l'activité a été forcé » Vous avez été téléporté au lobby"
   # Message to the player who forced stopped the activity
   StoppedActivity: "&2L'arrêt de l'activité a été effectué avec succès !"
 
   # Message of the old amount of player points
-  # parameters [2] + %playerpoints% to get player points, and %teampoints% to get team points
-  OldPlayerPoints: "&2Nombre de point du joueur %player% : &e%playerpoints% \n &2Nombre de point de la team %teamcolor% %team%: &e%teampoints%"
+  OldPoints: "&2Nombre de point du joueur %player% » &e%playerpoints% \n&2Nombre de point de la team %teamcolor% %team%: &e%teampoints%"
+  #EXCLUDED
+  GettingPoints: "&eCalcul du nombre de points..."
+  #EXCLUDED
+  # Message of the new amount of player points
+  NewPoints: "&2Nombre de point du joueur %player% » &e%playerpoints% \n&2Nombre de point de la team %teamcolor% %team%: &e%teampoints%"
+
+  # Player settings
+  AddedPlayerPoints: "&2Vous avez avec succès ajouté %points% points au joueur %teamcolor% %player%"
+  RemovedPlayerPoints: "&2Vous avez avec succès supprimé %points% points du joueur %teamcolor% %player%"
+  SetPlayerPoints: "&2Vous avez avec succès définis le nombre de point du joueur %teamcolor% %player% à &e%points%"
+
+  # Player message settings
+  AddedPointsToMessage: "&2Vous avez reçu &e%playerpoints% points &2!"
+  RemovedPointsToMessage: "&2Vous avez perdu &e%playerpoints% points &2!"
+  SetPointsToMessage: "&2Votre nombre de point a été défini à &e%playerpoints% points &2!"
 
   Teams:
-    # parameters [2]
-    AlreadyInTeam: "&4Erreur ! Vous êtes déjà dans l'équipe %teamcolor% %team% &4."
-    TeamIsFull: "&4Erreur ! l'équipe %teamcolor% %team% &4est complète."
-    JoinedTheTeam: "&aVous avez rejoint l'équipe » %teamcolor% %team% &4."
-    NeedToBeInTeam : "&4Erreur ! Vous devez être dans une équipe afin d'effectuer cette action."
+    AlreadyInTeam: "&4Erreur » Vous êtes déjà dans l'équipe » %teamcolor%%team%&4."
+    TeamIsFull: "&4Erreur » l'équipe » %teamcolor%%team% &4est complète."
+    JoinedTheTeam: "&aVous avez rejoint l'équipe » %teamcolor%%team%&4."
+    NeedToBeInTeam : "&4Erreur » Vous devez être dans une équipe afin d'effectuer cette action."
+    PlayerNeedToBeInTeam : "&4Erreur ! Le joueur » %player% doit être dans une équipe pour pouvoir effectuer cette action."
 
   # Messages for the first Activity
   FirstAC:
@@ -115,20 +119,18 @@ Messages:
     Timer: "&aLa salle des votes de VIP se fermera dans &b%timer%"
     # Timer in second, need to be a integer !
     TimerI: 240
-    Teleported: "&aVous venez d'être téléporté pour la première épreuve. \n Bonne chance !"
+    Teleported: "&aVous venez d'être téléporté pour la première épreuve. \nBonne chance !"
     VIP:
       VoteVip: "&aVous avez voté pour &e%player%"
-      AlreadyVoted: "&4Erreur ! Vous avez déjà voté pour un VIP."
-      AlreadyFinished: "&4Erreur ! La séléction des VIPS finis."
+      AlreadyVoted: "&4Erreur » Vous avez déjà voté pour un VIP."
+      AlreadyFinished: "&4Erreur » La séléction des VIPS finis."
       FinishedVIP: "&aLa salle des votes de VIP est close ! Les choix sont maintenant fait !"
-      # parameters [1]
-      AnnounceWhoVIP: "&aLe VIP de l'équipe %teamcolor% %team% est %teamcolor% %player% !"
+      AnnounceWhoVIP: "&aLe VIP de l'équipe » %teamcolor%%team% est %teamcolor% %player% !"
     BodyGuard:
       AlreadySelected: "&4Erreur ! Vous avez déjà séléctionné vos deux gardes du corps."
       Selected: "&aVous avez voté pour %player% en tant qu'un de vos gardes du corps !"
       FinishedBG: "&aLe choix des gardes du corps des VIP est terminé !"
-      # parameters [1]
-      AnnounceWhoBG: "&aLe %number% garde du corp de l'équipe %teamcolor% %team% est %teamcolor% %player% !"
+      AnnounceWhoBG: "&aLe %number% garde du corp de l'équipe » %teamcolor%%team% est %teamcolor% %player% !"
 
 
   # Messages for the second activity

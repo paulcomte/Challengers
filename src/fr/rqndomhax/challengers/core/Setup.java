@@ -1,9 +1,10 @@
 package fr.rqndomhax.challengers.core;
 
 import fr.rqndomhax.challengers.activites.ActivityCommands;
-import fr.rqndomhax.challengers.activites.firstactivity.VipSelect;
 import fr.rqndomhax.challengers.activites.firstactivity.FirstAL;
 import fr.rqndomhax.challengers.activites.firstactivity.FirstM;
+import fr.rqndomhax.challengers.activites.firstactivity.VipSelect;
+import fr.rqndomhax.challengers.listeners.PlayerChat;
 import fr.rqndomhax.challengers.listeners.TeamListener;
 import fr.rqndomhax.challengers.managers.MessageManagers;
 import fr.rqndomhax.challengers.managers.game.GameManager;
@@ -41,18 +42,18 @@ public class Setup {
 
         pm.registerEvents(new TeamListener(this), this.core);
         pm.registerEvents(new FirstAL(this), this.core);
+        pm.registerEvents(new PlayerChat(), this.core);
     }
 
     // Register all plugin commands
     private void registerCommands() {
 
-        this.core.getCommand("start").setExecutor(new ActivityCommands(this));
+        this.core.getCommand("ac").setExecutor(new ActivityCommands(this));
         this.core.getCommand("vipselect").setExecutor(new VipSelect(this));
 
     }
 
     // Create teams
-
     private void createTeams() {
 
         tm.getTeam().getTeams().add(new TeamData(TeamList.RED, 4));
@@ -77,7 +78,6 @@ public class Setup {
         // Register plugin's events and plugin's commands
         registerEvents();
         registerCommands();
-
     }
 
     public Core getCore() {

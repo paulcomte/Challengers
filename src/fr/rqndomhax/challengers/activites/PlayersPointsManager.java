@@ -2,6 +2,7 @@ package fr.rqndomhax.challengers.activites;
 
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -17,100 +18,138 @@ public class PlayersPointsManager {
         this.args = args;
     }
 
-    public boolean onSetPoints() {
+    private PlayerData onPoints() {
 
         if(args.length != 3) {
             ActivityCommands.showHelp(sender, 3);
-            return false;
+            return null;
         }
 
-        String targetName = args[2];
+        String targetName = args[1];
 
-        PlayerData playerData = setup.getGm().getPlayerData(targetName);
+        PlayerData playerData = Bukkit.getPlayer(targetName) == null ? setup.getGm().getPlayerData(targetName) : setup.getGm().getPlayerData(Bukkit.getPlayer(targetName).getUniqueId());
 
         if (playerData == null) {
             sender.sendMessage("WARNING: LE JOUEUR SPECIFIE N'EXISTE PAS DANS LA LISTE DES JOUEURS");
             sender.sendMessage("WARNING: VEUILLEZ VERIFIER SON PSEUDO");
-            sender.sendMessage("WARNING: SI VOUS PENSEZ QU'IL Y A UN SOUCIS VEUILLEZ CONTACTER §e_Paul#6918");
-            return false;
+            sender.sendMessage("WARNING: SI VOUS PENSEZ QU'IL Y A UN SOUCIS VEUILLEZ CONTACTER LE DEVELOPPEUR §e_Paul#6918");
+            return null;
         }
 
-        if(0 < Integer.parseInt(args[2]) || Integer.parseInt(args[2]) > 2147483645) {
+        if(Integer.parseInt(args[2]) < 0 || Integer.parseInt(args[2]) > 2147483645) {
             sender.sendMessage("WARNING: VEUILLEZ SPECIFIER UN NOMBRE CORRECT");
             sender.sendMessage("WARNING: LE NOMBRE DOIT ETRE COMPRIS ENTRE 0 & 2 147 483 644");
-            return false;
+            sender.sendMessage("WARNING: SI VOUS PENSEZ QU'IL Y A UN SOUCIS VEUILLEZ CONTACTER LE DEVELOPPEUR §e_Paul#6918");
+            return null;
         }
+
+        if(playerData.getTeam() == null) {
+            sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.Teams.PlayerNeedToBeInTeam").replace("%player%", playerData.getName())));
+            sender.sendMessage("WARNING: SI VOUS PENSEZ QU'IL Y A UN SOUCIS VEUILLEZ CONTACTER LE DEVELOPPEUR §e_Paul#6918");
+            return null;
+        }
+
+        return playerData;
+    }
+
+    public boolean onSetPoints() {
+
+        if(onPoints() == null)
+            return false;
 
         int points = Integer.parseInt(args[2]);
 
-        setup.getTm().autoAddPoints(playerData.getUuid(), points);
+        PlayerData playerData = onPoints();
 
-        return false;
+        sender.sendMessage(this.a(autoReplace(setup.getCore().getConfig().getString("Messages.OldPoints"), playerData)));
+
+        setup.getTm().autoSetPoints(playerData.getUuid(), points);
+
+        sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.GettingPoints")));
+
+        sender.sendMessage(this.a(autoReplace(setup.getCore().getConfig().getString("Messages.NewPoints"), playerData)));
+
+        sender.sendMessage(this.a(autoReplace2(setup.getCore().getConfig().getString("Messages.SetPlayerPoints"), playerData)));
+
+        tryMessage(setup.getCore().getConfig().getString("Messages.SetPointsToMessage"), playerData);
+
+        return true;
     }
 
     public boolean onRemovePoints() {
 
-        if(args.length != 3) {
-            ActivityCommands.showHelp(sender, 3);
+        if(onPoints() == null)
             return false;
-        }
-
-        String targetName = args[2];
-
-        PlayerData playerData = setup.getGm().getPlayerData(targetName);
-
-        if (playerData == null) {
-            sender.sendMessage("WARNING: LE JOUEUR SPECIFIE N'EXISTE PAS DANS LA LISTE DES JOUEURS");
-            sender.sendMessage("WARNING: VEUILLEZ VERIFIER SON PSEUDO");
-            sender.sendMessage("WARNING: SI VOUS PENSEZ QU'IL Y A UN SOUCIS VEUILLEZ CONTACTER §e_Paul#6918");
-            return false;
-        }
-
-        if(0 < Integer.parseInt(args[2]) || Integer.parseInt(args[2]) > 2147483645) {
-            sender.sendMessage("WARNING: VEUILLEZ SPECIFIER UN NOMBRE CORRECT");
-            sender.sendMessage("WARNING: LE NOMBRE DOIT ETRE COMPRIS ENTRE 0 & 2 147 483 644");
-            return false;
-        }
 
         int points = Integer.parseInt(args[2]);
 
+        PlayerData playerData = onPoints();
+
+
+        sender.sendMessage(this.a(autoReplace(setup.getCore().getConfig().getString("Messages.OldPoints"), playerData)));
+
         setup.getTm().autoRemovePoints(playerData.getUuid(), points);
 
-        return false;
+        sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.GettingPoints")));
+
+        sender.sendMessage(this.a(autoReplace(setup.getCore().getConfig().getString("Messages.NewPoints"), playerData)));
+
+        sender.sendMessage(this.a(autoReplace2(setup.getCore().getConfig().getString("Messages.RemovedPlayerPoints"), playerData)));
+
+        tryMessage(setup.getCore().getConfig().getString("Messages.RemovedPointsToMessage"), playerData);
+
+        return true;
 
     }
 
     public boolean onAddPoints() {
 
-        if(args.length != 3) {
-            ActivityCommands.showHelp(sender, 3);
+        if(onPoints() == null)
             return false;
-        }
-
-        String targetName = args[2];
-
-        PlayerData playerData = setup.getGm().getPlayerData(targetName);
-
-        if (playerData == null) {
-            sender.sendMessage("WARNING: LE JOUEUR SPECIFIE N'EXISTE PAS DANS LA LISTE DES JOUEURS");
-            sender.sendMessage("WARNING: VEUILLEZ VERIFIER SON PSEUDO");
-            sender.sendMessage("WARNING: SI VOUS PENSEZ QU'IL Y A UN SOUCIS VEUILLEZ CONTACTER §e_Paul#6918");
-            return false;
-        }
-
-        if(0 < Integer.parseInt(args[2]) || Integer.parseInt(args[2]) > 2147483645) {
-            sender.sendMessage("WARNING: VEUILLEZ SPECIFIER UN NOMBRE CORRECT");
-            sender.sendMessage("WARNING: LE NOMBRE DOIT ETRE COMPRIS ENTRE 0 & 2 147 483 644");
-            return false;
-        }
 
         int points = Integer.parseInt(args[2]);
 
+        PlayerData playerData = onPoints();
+
+        sender.sendMessage(this.a(autoReplace(setup.getCore().getConfig().getString("Messages.OldPoints"), playerData)));
+
         setup.getTm().autoAddPoints(playerData.getUuid(), points);
-        sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.SuccessAddPlayerPoints")));
 
+        sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.GettingPoints")));
 
-        return false;
+        sender.sendMessage(this.a(autoReplace(setup.getCore().getConfig().getString("Messages.NewPoints"), playerData)));
+
+        sender.sendMessage(this.a(autoReplace2(setup.getCore().getConfig().getString("Messages.AddedPlayerPoints"), playerData)));
+
+        tryMessage(setup.getCore().getConfig().getString("Messages.AddedPointsToMessage"), playerData);
+
+        return true;
+    }
+
+    private String autoReplace(String message, PlayerData playerData) {
+
+        return message
+                .replace("%team%", playerData.getTeam().getName())
+                .replace("%teamcolor%", playerData.getTeam().getChatColor() + "")
+                .replace("%player%", playerData.getName())
+                .replace("%playerpoints%", String.valueOf(playerData.getPlayerPoints()))
+                .replace("%teampoints%", String.valueOf(setup.getTm().getPlayerTeam(playerData.getUuid()).getTeamPoints()));
+
+    }
+
+    private String autoReplace2(String message, PlayerData playerData) {
+
+        return message
+                .replace("%player%", playerData.getName())
+                .replace("%teamcolor%", playerData.getTeam().getChatColor() + "")
+                .replace("%points%", String.valueOf(playerData.getPlayerPoints()));
+
+    }
+
+    private void tryMessage(String message, PlayerData playerData) {
+        try{
+            Bukkit.getPlayer(playerData.getUuid()).sendMessage(this.a(message.replace("%playerpoints%", String.valueOf(playerData.getPlayerPoints()))));
+        } catch (Exception ignored){}
     }
 
     private String a(String a) {
