@@ -1,0 +1,9 @@
+name: Challengers
+version: 1.0
+author: RqndomHax
+main: fr.rqndomhax.challengers.core.Core
+commands:
+  start:
+    description: Démarre une activité au choix <first,second,third,fourth,fifth>
+  vipselect:
+    description: Affiche le menu de vote pour un vip

@@ -1,0 +1,42 @@
+package fr.rqndomhax.challengers.managers.game;
+
+import fr.rqndomhax.challengers.managers.PlayerData;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class Game {
+
+    private GameState gameState;
+    private final Set<PlayerData> players = new HashSet<>();
+    private boolean isVIPCooldownFinished = false;
+    private boolean isBodyGuardCooldownFinished = false;
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public Set<PlayerData> getPlayers() {
+        return players;
+    }
+
+    public void setVIPCooldownFinished(boolean VIPCooldownFinished) {
+        isVIPCooldownFinished    = VIPCooldownFinished;
+    }
+
+    public void setBodyGuardCooldownFinished(boolean bodyGuardCooldownFinished) {
+        isBodyGuardCooldownFinished = bodyGuardCooldownFinished;
+    }
+
+    public boolean isVIPCooldownFinished() {
+        return isVIPCooldownFinished;
+    }
+
+    public boolean isBodyGuardCooldownFinished() {
+        return isBodyGuardCooldownFinished;
+    }
+}
