@@ -18,8 +18,8 @@ public class TeamManager {
 
         playerData.getTeamData().addTeamSize(1);
 
-        if(Bukkit.getOfflinePlayer(playerData.getUuid()).isOnline()) {
-            Bukkit.getPlayer(playerData.getUuid()).setDisplayName(team.getChatColor() + playerData.getName());
+        if(Bukkit.getPlayer(playerData.getUuid()) != null) {
+            Bukkit.getPlayer(playerData.getUuid()).setDisplayName(team.getChatColor() + "[" + team.getName().toUpperCase() + "] " + playerData.getName());
         }
 
     }
@@ -38,7 +38,7 @@ public class TeamManager {
 
         playerData.setTeamData(null);
 
-        if(Bukkit.getOfflinePlayer(playerData.getUuid()).isOnline())
+        if(Bukkit.getPlayer(playerData.getUuid()) != null)
             Bukkit.getPlayer(playerData.getUuid()).setDisplayName(playerData.getName());
 
     }
@@ -76,8 +76,8 @@ public class TeamManager {
 
     // Remove player points and player's team
     public void autoSetPoints(PlayerData playerData, int i) {
+        playerData.getTeamData().setTeamPoints((playerData.getTeamData().getTeamPoints() - playerData.getPlayerPoints())+ i);
         playerData.setPlayerPoints(i);
-        playerData.getTeamData().setTeamPoints(playerData.getTeamData().getTeamPoints() - playerData.getPlayerPoints()+ i);
     }
 
     // Add team points

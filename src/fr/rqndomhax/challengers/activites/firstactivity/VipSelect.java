@@ -2,10 +2,8 @@ package fr.rqndomhax.challengers.activites.firstactivity;
 
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
-import fr.rqndomhax.challengers.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -32,11 +30,16 @@ public class VipSelect implements CommandExecutor {
 
         Player p = (Player)sender;
 
+        if(setup.getVip().isVIPCooldownFinished()) {
+            p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.VIP.AlreadyFinished")));
+        }
+
         PlayerData playerData = setup.getGm().getPlayerData(p.getUniqueId());
 
 
-        if(setup.getVip().isVIPCooldownFinished()) {
-            p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.VIP.AlreadyFinished")));
+        if(playerData == null) {
+            p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.NotPlaying")));
+            return false;
         }
 
         if(!(setup.getTm().hasTeam(playerData))) {
@@ -45,7 +48,7 @@ public class VipSelect implements CommandExecutor {
         }
 
         if (setup.getVip().getVotes().contains(playerData)) {
-            p.sendMessage(setup.getCore().getConfig().getString("Messages.FirstAC.VIP.AlreadyVoted"));
+            p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.VIP.AlreadyVoted")));
             return false;
         }
 
@@ -59,17 +62,9 @@ public class VipSelect implements CommandExecutor {
             return false;
         }
 
-        for(PlayerData playerDatas : playerTeam) {
-            pInv.addItem(new ItemBuilder(Material.SKULL_ITEM, 1, (short)3)
-                    .setSkullOwner(playerDatas.getUuid())
-                    .setName(ChatColor.GOLD + "Voter pour » " + playerDatas.getName())
-                    .setLore(ChatColor.AQUA + "Nombre de votes » " + ChatColor.DARK_AQUA + setup.getVip().getVipVotes().getOrDefault(playerDatas, 0))
-                    .toItemStack());
-        }
+        new IVIP(p, setup, playerTeam).open();
 
-        p.openInventory(pInv);
-
-        return false;
+        return true;
     }
 
     private String a(String a) {

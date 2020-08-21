@@ -100,31 +100,41 @@ Messages:
   # Message of the new amount of player points
   NewPoints: "&2Nombre de point du joueur %player% » &e%playerpoints% \n&2Nombre de point de la team %teamcolor% %team%: &e%teampoints%"
 
-  # Player settings
+  # Player points settings
   AddedPlayerPoints: "&2Vous avez avec succès ajouté %points% points au joueur %teamcolor% %player%"
   RemovedPlayerPoints: "&2Vous avez avec succès supprimé %points% points du joueur %teamcolor% %player%"
   SetPlayerPoints: "&2Vous avez avec succès définis le nombre de point du joueur %teamcolor% %player% à &e%points%"
 
-  # Player message settings
-  AddedPointsToMessage: "&2Vous avez reçu &e%playerpoints% points &2!"
-  RemovedPointsToMessage: "&2Vous avez perdu &e%playerpoints% points &2!"
-  SetPointsToMessage: "&2Votre nombre de point a été défini à &e%playerpoints% points &2!"
+  # Team points settings
+  AddedTeamPoints: "&2Vous avez avec succès ajouté %points% points à l'équipe %teamcolor% %team%"
+  RemovedTeamPoints: "&2Vous avez avec succès supprimé %points% points de l'équipe %teamcolor% %team%"
+  SetTeamPoints: "&2Vous avez avec succès définis le nombre de point de l'équipe %teamcolor% %team% à &e%points%"
+
+  # Player points message settings
+  AddedPlayerPointsToMessage: "&2Vous avez reçu &e%playerpoints% points &2!"
+  RemovedPlayerPointsToMessage: "&2Vous avez perdu &e%playerpoints% points &2!"
+  SetPlayerPointsToMessage: "&2Votre nombre de point a été défini à &e%playerpoints% points &2!"
+
+  # Team points messages settings
+  AddedTeamPointsToMessage: "&2Votre équipe a reçu &e%teampoints% points &2!"
+  RemovedTeamPointsToMessage: "&2Votre équipe a perdu &e%teampoints% points &2!"
+  SeTeamPointsToMessage: "&2Le nombre de point de votre équipe a été défini à &e%teampoints% points &2!"
 
   Teams:
     AlreadyInTeam: "&4Erreur » Vous êtes déjà dans l'équipe » %teamcolor%%team%&4."
     TeamIsFull: "&4Erreur » l'équipe » %teamcolor%%team% &4est complète."
     JoinedTheTeam: "&aVous avez rejoint l'équipe » %teamcolor%%team%&4."
     NeedToBeInTeam : "&4Erreur » Vous devez être dans une équipe afin d'effectuer cette action."
-    PlayerNeedToBeInTeam : "&4Erreur ! Le joueur » %player% doit être dans une équipe pour pouvoir effectuer cette action."
+    PlayerNeedToBeInTeam : "&4Erreur » Le joueur » %player% doit être dans une équipe pour pouvoir effectuer cette action."
 
   # Messages for the first Activity
   FirstAC:
     Start: "&aCombattantes, Combattants, Préparez vous, L'épreuve &en°1 &ava débuter !"
-    Timer: "&aLa salle des votes de VIP se fermera dans &b%timer%"
+    Timer: "&aLa salle des votes se fermera dans &b%timer%"
     # Timer in second, need to be a integer !
     TimerI: 240
     Teleported: "&aVous venez d'être téléporté pour la première épreuve. \nBonne chance !"
-    CannotVoteForYourself: "&4Erreur ! Vous ne pouvez pas voter pour vous-même"
+    CannotVoteForYourself: "&4Erreur » Vous ne pouvez pas voter pour vous-même"
     VIP:
       VoteVip: "&aVous avez voté pour &e%player%"
       AlreadyVoted: "&4Erreur » Vous avez déjà voté pour un VIP."
@@ -132,11 +142,13 @@ Messages:
       FinishedVIP: "&aLa salle des votes de VIP est close ! Les choix sont maintenant fait !"
       AnnounceWhoVIP: "&aLe VIP de l'équipe » %teamcolor%%team% est %teamcolor% %player% !"
     BodyGuard:
-      AlreadySelected: "&4Erreur ! Vous avez déjà séléctionné vos deux gardes du corps."
+      AlreadySelected: "&4Erreur » Vous avez déjà séléctionné vos deux gardes du corps."
       Selected: "&aVous avez voté pour %player% en tant qu'un de vos gardes du corps !"
       AlreadySelectedAsBG: "&aVous avez déjà pour %player% en tant qu'un de vos gardes du corps !"
       FinishedBG: "&aLe choix des gardes du corps des VIP est terminé !"
       AnnounceWhoBG: "&aLe %number% garde du corp de l'équipe » %teamcolor%%team% est %teamcolor% %player% !"
+      NotSelectingBodyguards: "&4Erreur » La séléction des gardes du corps n'a pas débuté !"
+      NotTheVip: "&4Erreur » Vous n'êtes pas le VIP de votre équipe !"
 
 
   # Messages for the second activity

@@ -71,7 +71,7 @@ public class PlayersPointsManager {
 
         sender.sendMessage(this.a(autoReplace2(setup.getCore().getConfig().getString("Messages.SetPlayerPoints"), playerData)));
 
-        tryMessage(setup.getCore().getConfig().getString("Messages.SetPointsToMessage"), playerData);
+        tryMessage(setup.getCore().getConfig().getString("Messages.SetPointsToMessage"), playerData, points);
 
         return true;
     }
@@ -96,7 +96,7 @@ public class PlayersPointsManager {
 
         sender.sendMessage(this.a(autoReplace2(setup.getCore().getConfig().getString("Messages.RemovedPlayerPoints"), playerData)));
 
-        tryMessage(setup.getCore().getConfig().getString("Messages.RemovedPointsToMessage"), playerData);
+        tryMessage(setup.getCore().getConfig().getString("Messages.RemovedPointsToMessage"), playerData, points);
 
         return true;
 
@@ -121,7 +121,7 @@ public class PlayersPointsManager {
 
         sender.sendMessage(this.a(autoReplace2(setup.getCore().getConfig().getString("Messages.AddedPlayerPoints"), playerData)));
 
-        tryMessage(setup.getCore().getConfig().getString("Messages.AddedPointsToMessage"), playerData);
+        tryMessage(setup.getCore().getConfig().getString("Messages.AddedPointsToMessage"), playerData, points);
 
         return true;
     }
@@ -146,9 +146,9 @@ public class PlayersPointsManager {
 
     }
 
-    private void tryMessage(String message, PlayerData playerData) {
+    private void tryMessage(String message, PlayerData playerData, int points) {
         try{
-            Bukkit.getPlayer(playerData.getUuid()).sendMessage(this.a(message.replace("%playerpoints%", String.valueOf(playerData.getPlayerPoints()))));
+            Bukkit.getPlayer(playerData.getUuid()).sendMessage(this.a(message.replace("%playerpoints%", String.valueOf(points))));
         } catch (Exception ignored){}
     }
 

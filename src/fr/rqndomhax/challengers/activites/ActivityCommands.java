@@ -18,7 +18,7 @@ public class ActivityCommands implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
 
         if(!sender.hasPermission(setup.getCore().getConfig().getString("Permissions.ActivityManager"))) {
-            sender.sendMessage(setup.getCore().getConfig().getString("Messages.NotAllowed"));
+            sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.NotAllowed")));
             return false;
         }
 
@@ -70,16 +70,16 @@ public class ActivityCommands implements CommandExecutor {
                 return new PlayersPointsManager(setup, sender, args).onRemovePoints();
 
             case "teamadd":
-
-                break;
+                return new TeamPointsManager(setup, sender, args).onAddPoints();
 
             case "teamremove":
-
-                break;
+                return new TeamPointsManager(setup, sender, args).onRemovePoints();
 
             case "teamset":
+                return new TeamPointsManager(setup, sender, args).onSetPoints();
 
-                break;
+            case "admintest":
+                setup.getFm().teleport();
 
             default:
                 showHelp(sender, 1);
@@ -156,6 +156,10 @@ public class ActivityCommands implements CommandExecutor {
 
         }
 
+    }
+
+    private String a(String a) {
+        return ChatColor.translateAlternateColorCodes('&', a);
     }
 
 }

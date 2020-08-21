@@ -2,6 +2,9 @@ package fr.rqndomhax.challengers.core;
 
 import fr.rqndomhax.challengers.activites.ActivityCommands;
 import fr.rqndomhax.challengers.activites.firstactivity.*;
+import fr.rqndomhax.challengers.inventory.RInventoryHandler;
+import fr.rqndomhax.challengers.inventory.RInventoryManager;
+import fr.rqndomhax.challengers.inventory.RInventoryTask;
 import fr.rqndomhax.challengers.listeners.PlayerListener;
 import fr.rqndomhax.challengers.listeners.TeamListener;
 import fr.rqndomhax.challengers.managers.MessageManagers;
@@ -22,6 +25,7 @@ import java.util.UUID;
 public class Setup {
     private final Core core;
     private final MessageManagers mm;
+    private RInventoryManager rInventoryManager;
     private Bodyguard bG;
     private VIP vip;
     private FirstM fm;
@@ -37,6 +41,7 @@ public class Setup {
     }
 
     private void registerVars() {
+        rInventoryManager = new RInventoryManager();
         tm = new TeamManager();
         fm = new FirstM(this);
         gm = new GameManager(this);
@@ -50,8 +55,9 @@ public class Setup {
         PluginManager pm = Bukkit.getPluginManager();
 
         pm.registerEvents(new TeamListener(this), this.core);
-        pm.registerEvents(new FirstAL(this), this.core);
         pm.registerEvents(new PlayerListener(this), this.core);
+        pm.registerEvents(new RInventoryHandler(this.core, rInventoryManager), this.core);
+        new RInventoryTask(new RInventoryManager()).runTaskTimerAsynchronously(this.core, 0, 1);
     }
 
     // Register all plugin commands

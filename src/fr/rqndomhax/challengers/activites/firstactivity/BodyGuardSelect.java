@@ -2,15 +2,11 @@ package fr.rqndomhax.challengers.activites.firstactivity;
 
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
-import fr.rqndomhax.challengers.utils.ItemBuilder;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 
 import java.util.Set;
 
@@ -32,6 +28,10 @@ public class BodyGuardSelect implements CommandExecutor {
 
         Player p = (Player) sender;
 
+        if (setup.getbG().isBodyGuardCooldownFinished()) {
+            p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.BodyGuard.FinishedBG")));
+        }
+
         PlayerData playerData = setup.getGm().getPlayerData(p.getUniqueId());
 
         if(playerData == null) {
@@ -39,12 +39,18 @@ public class BodyGuardSelect implements CommandExecutor {
             return false;
         }
 
-        if (setup.getbG().isBodyGuardCooldownFinished()) {
-            p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.BodyGuard.FinishedBG")));
-        }
-
         if (!(setup.getTm().hasTeam(playerData))) {
             p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.Teams.NeedToBeInTeam")));
+            return false;
+        }
+
+        if(!setup.getVip().isVIPCooldownFinished()) {
+            p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.BodyGuard.NotSelectingBodyguards")));
+            return false;
+        }
+
+        if(setup.getVip().getVips().getOrDefault(playerData.getTeamData(), null) != playerData) {
+            p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.BodyGuard.NotTheVIP")));
             return false;
         }
 
@@ -53,26 +59,17 @@ public class BodyGuardSelect implements CommandExecutor {
             return false;
         }
 
-        Inventory pInv = Bukkit.createInventory(null, 9, "Séléction de garde du corps");
-
         // Add players head
-        Set<PlayerData> playersteam = playerData.getTeamData().getMembers();
+        Set<PlayerData> teamPlayers = playerData.getTeamData().getMembers();
 
-        if (playersteam.isEmpty()) {
+        if (teamPlayers.isEmpty()) {
             p.sendMessage("Erreur interne, l'équipe est vide ! Veuillez contacter le développeur: §a_Paul#6918");
             return false;
         }
 
-        for (PlayerData playerDatas : playersteam) {
-            pInv.addItem(new ItemBuilder(Material.SKULL_ITEM, 1, (short) 3)
-                    .setSkullOwner(playerData.getUuid())
-                    .setName(ChatColor.GOLD + "Choisir » " + playerData.getName())
-                    .toItemStack());
-        }
+        new IBodyGuard(p, setup, teamPlayers).open();
 
-        p.openInventory(pInv);
-
-        return false;
+        return true;
     }
 
     private String a(String a) {

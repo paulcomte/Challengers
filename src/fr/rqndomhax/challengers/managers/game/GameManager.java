@@ -60,16 +60,16 @@ public class GameManager {
         if(hasBeenForceStopped)
              message = setup.getCore().getConfig().getString("Messages.ActivityStopped");
 
-        for(PlayerData users : game.getPlayers()) {
+        for(PlayerData playerDatas : game.getPlayers()) {
 
-            if(!Bukkit.getOfflinePlayer(users.getUuid()).isOnline()) continue;
+            if(Bukkit.getPlayer(playerDatas.getUuid()) == null) continue;
 
-            Bukkit.getPlayer(users.getUuid()).teleport(location);
-            if(Bukkit.getPlayer(users.getUuid()).getGameMode() != GameMode.ADVENTURE)
-                Bukkit.getPlayer(users.getUuid()).setGameMode(GameMode.ADVENTURE);
+            Bukkit.getPlayer(playerDatas.getUuid()).teleport(location);
+            if(Bukkit.getPlayer(playerDatas.getUuid()).getGameMode() != GameMode.ADVENTURE)
+                Bukkit.getPlayer(playerDatas.getUuid()).setGameMode(GameMode.ADVENTURE);
 
             if(hasBeenForceStopped)
-                Bukkit.getPlayer(users.getUuid()).sendMessage(message);
+                Bukkit.getPlayer(playerDatas.getUuid()).sendMessage(message);
 
         }
 

@@ -16,55 +16,55 @@ public class FirstM {
     
     public void teleport() {
 
-        String[] redCoords = setup.getCore().getConfig().getString("Location.FirstAC.redLoc.coords").split(",");
-        String[] blueCoords = setup.getCore().getConfig().getString("Location.FirstAC.blueLoc.coords").split(",");
-        String[] greenCords = setup.getCore().getConfig().getString("Location.FirstAC.greenLoc.coords").split(",");
-        String[] yellowCords = setup.getCore().getConfig().getString("Location.FirstAC.yellowLoc.coords").split(",");
+        String[] redCoords = setup.getCore().getConfig().getString("Locations.FirstAC.redLoc.coords").replaceAll(" ", "").split(",");
+        String[] blueCoords = setup.getCore().getConfig().getString("Locations.FirstAC.blueLoc.coords").replaceAll(" ", "").split(",");
+        String[] greenCords = setup.getCore().getConfig().getString("Locations.FirstAC.greenLoc.coords").replaceAll(" ", "").split(",");
+        String[] yellowCords = setup.getCore().getConfig().getString("Locations.FirstAC.yellowLoc.coords").replaceAll(" ", "")  .split(",");
 
-        Location redLoc = new Location(Bukkit.getWorld(setup.getCore().getConfig().getString("Location.FirstAC.redLoc.WorldName")),
-                Double.parseDouble(redCoords[0]),
-                Double.parseDouble(redCoords[1]),
-                Double.parseDouble(redCoords[2]));
+        Location redLoc = new Location(Bukkit.getWorld(setup.getCore().getConfig().getString("Locations.FirstAC.redLoc.WorldName")),
+                Integer.parseInt(redCoords[0]),
+                Integer.parseInt(redCoords[1]),
+                Integer.parseInt(redCoords[2]));
 
-        Location blueLoc = new Location(Bukkit.getWorld(setup.getCore().getConfig().getString("Location.FirstAC.blueLoc.WorldName")),
-                Double.parseDouble(blueCoords[0]),
-                Double.parseDouble(blueCoords[1]),
-                Double.parseDouble(blueCoords[2]));
+        Location blueLoc = new Location(Bukkit.getWorld(setup.getCore().getConfig().getString("Locations.FirstAC.blueLoc.WorldName")),
+                Integer.parseInt(blueCoords[0]),
+                Integer.parseInt(blueCoords[1]),
+                Integer.parseInt(blueCoords[2]));
 
-        Location greenLoc = new Location(Bukkit.getWorld(setup.getCore().getConfig().getString("Location.FirstAC.greenLoc.WorldName")),
-                Double.parseDouble(greenCords[0]),
-                Double.parseDouble(greenCords[1]),
-                Double.parseDouble(greenCords[2]));
+        Location greenLoc = new Location(Bukkit.getWorld(setup.getCore().getConfig().getString("Locations.FirstAC.greenLoc.WorldName")),
+                Integer.parseInt(greenCords[0]),
+                Integer.parseInt(greenCords[1]),
+                Integer.parseInt(greenCords[2]));
 
-        Location yellowLoc = new Location(Bukkit.getWorld(setup.getCore().getConfig().getString("Location.FirstAC.yellowLoc.WorldName")),
-                Double.parseDouble(yellowCords[0]),
-                Double.parseDouble(yellowCords[1]),
-                Double.parseDouble(yellowCords[2]));
+        Location yellowLoc = new Location(Bukkit.getWorld(setup.getCore().getConfig().getString("Locations.FirstAC.yellowLoc.WorldName")),
+                Integer.parseInt(yellowCords[0]),
+                Integer.parseInt(yellowCords[1]),
+                Integer.parseInt(yellowCords[2]));
 
 
-        for(PlayerData playerData : setup.getGm().getGame().getPlayers()) {
+        for(PlayerData playerDatas : setup.getGm().getGame().getPlayers()) {
 
-            if(!Bukkit.getOfflinePlayer(playerData.getUuid()).isOnline()) continue;
+            if(Bukkit.getPlayer(playerDatas.getUuid()) == null) continue;
 
-            if(setup.getVip().getVips().get(playerData.getTeamData()) != playerData && !setup.getbG().getBodyguards().contains(playerData)) continue;
+            if(setup.getVip().getVips().get(playerDatas.getTeamData()) != playerDatas && !setup.getbG().getBodyguards().contains(playerDatas)) continue;
 
-            switch(playerData.getTeamData().getTeam()) {
+            switch(playerDatas.getTeamData().getTeam()) {
 
                 case RED:
-                    Bukkit.getPlayer(playerData.getUuid()).teleport(redLoc);
+                    Bukkit.getPlayer(playerDatas.getUuid()).teleport(redLoc);
                     break;
                 case CYAN:
-                    Bukkit.getPlayer(playerData.getUuid()).teleport(blueLoc);
+                    Bukkit.getPlayer(playerDatas.getUuid()).teleport(blueLoc);
                     break;
                 case GREEN:
-                    Bukkit.getPlayer(playerData.getUuid()).teleport(greenLoc);
+                    Bukkit.getPlayer(playerDatas.getUuid()).teleport(greenLoc);
                     break;
                 case YELLOW:
-                    Bukkit.getPlayer(playerData.getUuid()).teleport(yellowLoc);
+                    Bukkit.getPlayer(playerDatas.getUuid()).teleport(yellowLoc);
                     break;
             }
 
-            Bukkit.getPlayer(playerData.getUuid()).sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.Teleported")));
+            Bukkit.getPlayer(playerDatas.getUuid()).sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.Teleported")));
 
         }
         

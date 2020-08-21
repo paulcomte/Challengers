@@ -1,7 +1,10 @@
 package fr.rqndomhax.challengers.activites;
 
 import fr.rqndomhax.challengers.core.Setup;
-import fr.rqndomhax.challengers.managers.team.TeamList;
+import fr.rqndomhax.challengers.managers.PlayerData;
+import fr.rqndomhax.challengers.managers.team.TeamData;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 public class TeamPointsManager {
@@ -16,34 +19,146 @@ public class TeamPointsManager {
         this.args = args;
     }
 
-    public boolean onSetPoints() {
+    private TeamData onPoints() {
 
         if(args.length != 3) {
-            ActivityCommands.showHelp(sender, 4);
-            return false;
+            ActivityCommands.showHelp(sender, 3);
+            return null;
         }
 
-        TeamList selectedTeam = null;
+        String teamTarget = args[1];
 
-        for (TeamList teams : TeamList.values()) {
+        TeamData teamData = null;
 
-            if(!args[1].equalsIgnoreCase(teams.getName())) continue;
+        for(TeamData teamDatas : setup.getTm().getTeam().getTeams()) {
 
-            selectedTeam = teams;
+            if(!teamDatas.getTeam().getName().equalsIgnoreCase(args[1])) continue;
+
+            teamData = teamDatas;
         }
 
-        if(selectedTeam == null) {
-            sender.sendMessage("WARNING: VEUILLEZ SPECIFIER UNE EQUIPE CORRECT");
-            sender.sendMessage("WARNING: LISTE DES EQUIPES: &bBLEUE &f- &cROUGE &f- &2VERTE &f- &eJAUNE");
+        if(teamData == null) {
+            sender.sendMessage("WARNING: L'EQUIPE SPECIFIE N'EXISTE PAS");
+            sender.sendMessage("WARNING: VEUILLEZ VERIFIER SON NOM");
+            sender.sendMessage("WARNING: LISTE DES NOMS: §bBLEUE §cROUGE §aVERTE §eJAUNE");
+            sender.sendMessage("WARNING: SI VOUS PENSEZ QU'IL Y A UN SOUCIS VEUILLEZ CONTACTER LE DEVELOPPEUR §e_Paul#6918");
+            return null;
         }
 
-        if(0 < Integer.parseInt(args[2]) || Integer.parseInt(args[2]) > 2147483645) {
+        if(Integer.parseInt(args[2]) < 0 || Integer.parseInt(args[2]) > 2147483645) {
             sender.sendMessage("WARNING: VEUILLEZ SPECIFIER UN NOMBRE CORRECT");
             sender.sendMessage("WARNING: LE NOMBRE DOIT ETRE COMPRIS ENTRE 0 & 2 147 483 644");
-            return false;
+            sender.sendMessage("WARNING: SI VOUS PENSEZ QU'IL Y A UN SOUCIS VEUILLEZ CONTACTER LE DEVELOPPEUR §e_Paul#6918");
+            return null;
         }
 
-        return false;
+        return teamData;
+
+
+    }
+
+    public boolean onAddPoints() {
+
+        if(onPoints() == null)
+            return false;
+
+        int points = Integer.parseInt(args[2]);
+
+        TeamData teamData = onPoints();
+
+        sender.sendMessage(this.a(autoReplace(setup.getCore().getConfig().getString("Messages.OldPoints"), teamData)));
+
+        teamData.setTeamPoints(teamData.getTeamPoints() + points);
+
+        sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.GettingPoints")));
+
+        sender.sendMessage(this.a(autoReplace(setup.getCore().getConfig().getString("Messages.NewPoints"), teamData)));
+
+        sender.sendMessage(this.a(autoReplace2(setup.getCore().getConfig().getString("Messages.AddedTeamPoints"), teamData)));
+
+        tryMessage(setup.getCore().getConfig().getString("Messages.AddedTeamPointsToMessage"), teamData, points);
+
+        return true;
+    }
+
+    public boolean onRemovePoints() {
+
+        if(onPoints() == null)
+            return false;
+
+        int points = Integer.parseInt(args[2]);
+
+        TeamData teamData = onPoints();
+
+        sender.sendMessage(this.a(autoReplace(setup.getCore().getConfig().getString("Messages.OldPoints"), teamData)));
+
+        teamData.setTeamPoints(teamData.getTeamPoints() - points);
+
+        sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.GettingPoints")));
+
+        sender.sendMessage(this.a(autoReplace(setup.getCore().getConfig().getString("Messages.NewPoints"), teamData)));
+
+        sender.sendMessage(this.a(autoReplace2(setup.getCore().getConfig().getString("Messages.RemovedTeamPoints"), teamData)));
+
+        tryMessage(setup.getCore().getConfig().getString("Messages.RemovedTeamPointsToMessage"), teamData, points);
+
+        return true;
+    }
+
+    public boolean onSetPoints() {
+
+        if(onPoints() == null)
+            return false;
+
+        int points = Integer.parseInt(args[2]);
+
+        TeamData teamData = onPoints();
+
+        sender.sendMessage(this.a(autoReplace(setup.getCore().getConfig().getString("Messages.OldPoints"), teamData)));
+
+        teamData.setTeamPoints(points);
+
+        sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.GettingPoints")));
+
+        sender.sendMessage(this.a(autoReplace(setup.getCore().getConfig().getString("Messages.NewPoints"), teamData)));
+
+        sender.sendMessage(this.a(autoReplace2(setup.getCore().getConfig().getString("Messages.SetTeamPoints"), teamData)));
+
+        tryMessage(setup.getCore().getConfig().getString("Messages.SetTeamPointsToMessage"), teamData, points);
+
+        return true;
+    }
+
+    private String autoReplace(String message, TeamData teamData) {
+
+        return message
+                .replace("%team%", teamData.getTeam().getName())
+                .replace("%teamcolor%", teamData.getTeam().getChatColor() + "")
+                .replace("%teampoints%", String.valueOf(teamData.getTeamPoints()));
+
+    }
+
+    private String autoReplace2(String message, TeamData teamData) {
+
+        return message
+                .replace("%team%", teamData.getTeam().getName())
+                .replace("%teamcolor%", teamData.getTeam().getChatColor() + "")
+                .replace("%points%", String.valueOf(teamData.getTeamPoints()));
+
+    }
+
+    private void tryMessage(String message, TeamData teamData, int points) {
+
+        for(PlayerData playerData : teamData.getMembers())
+
+        try{
+            Bukkit.getPlayer(playerData.getUuid()).sendMessage(this.a(message.replace("%teampoints%", String.valueOf(points))));
+        } catch (Exception ignored){}
+
+    }
+
+    private String a(String a) {
+        return ChatColor.translateAlternateColorCodes('&', a);
     }
 
 }

@@ -34,11 +34,11 @@ public class FirstT extends BukkitRunnable {
                     Bukkit.getServer().broadcastMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.Timer").replace("%timer%", "30 secondes")));
                     break;
 
-                case 10: case 9: case 8: case 7: case 6: case 5: case 4: case 3: case 2:
+                case 120: case 121: case 122: case 123: case 124: case 125: case 126: case 127: case 128:
                     Bukkit.getServer().broadcastMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.Timer").replace("%timer%", (120 - i) + " secondes")));
                     break;
 
-                case 1:
+                case 129:
                     Bukkit.getServer().broadcastMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.Timer").replace("%timer%", "1 seconde")));
                     break;
 
@@ -50,6 +50,7 @@ public class FirstT extends BukkitRunnable {
                 setup.getVip().setVIPCooldownFinished(true);
                 setup.getVip().announceVIPFinished();
                 i = 0;
+                return;
             }
 
             i++;
@@ -72,11 +73,11 @@ public class FirstT extends BukkitRunnable {
                     Bukkit.getServer().broadcastMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.Timer").replace("%timer%", "30 secondes")));
                     break;
 
-                case 10: case 9: case 8: case 7: case 6: case 5: case 4: case 3: case 2:
+                case 120: case 121: case 122: case 123: case 124: case 125: case 126: case 127: case 128:
                     Bukkit.getServer().broadcastMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.Timer").replace("%timer%", (120 - i) + " secondes")));
                     break;
 
-                case 1:
+                case 129:
                     Bukkit.getServer().broadcastMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.Timer").replace("%timer%", "1 seconde")));
                     break;
 

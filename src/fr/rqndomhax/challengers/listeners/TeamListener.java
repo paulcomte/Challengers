@@ -120,6 +120,7 @@ public class TeamListener implements Listener {
 
             if(playerDatas.getName() == null) continue;
 
+            sb.append("\n");
             sb.append(team.getChatColor()).append("• ").append(playerDatas.getName());
 
         }

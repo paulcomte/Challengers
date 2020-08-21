@@ -24,7 +24,7 @@ public class VIP {
 
             if (teamDatas != playerData.getTeamData()) continue;
 
-            vipVotes.put(playerData, vipVotes.get(playerData) + i);
+            vipVotes.put(playerData, vipVotes.getOrDefault(playerData, 0) + i);
 
         }
     }
@@ -35,7 +35,7 @@ public class VIP {
 
             if (teamDatas != playerData.getTeamData()) continue;
 
-            vipVotes.put(playerData, vipVotes.get(playerData) - i);
+            vipVotes.put(playerData, vipVotes.getOrDefault(playerData, 0) - i);
 
         }
 
