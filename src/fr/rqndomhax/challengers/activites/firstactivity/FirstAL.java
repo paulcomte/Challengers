@@ -2,7 +2,6 @@ package fr.rqndomhax.challengers.activites.firstactivity;
 
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -44,11 +43,11 @@ public class FirstAL implements Listener {
 
         }
 
-        setup.getFm().addVipVote(, 1);
-        setup.getFm().getPVoting().add(p.getUniqueId());
+        setup.getVip().addVipVotes(voteP, 1);
+        setup.getVip().getVotes().add(setup.getGm().getPlayerData(p.getUniqueId()));
 
         p.closeInventory();
-        p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.VIP.VoteVip").replace("%player%", Bukkit.getOfflinePlayer(voteP).getName())));
+        p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.VIP.VoteVip").replace("%player%", voteP.getName())));
 
     }
 
@@ -99,7 +98,7 @@ public class FirstAL implements Listener {
             return;
         }
 
-        setup.getbG().getBodyguards().put(playerData.getTeamData(), userSelected);
+        setup.getbG().getBodyguards().add(playerData);
 
         p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.BodyGuard.Selected").replace("%player%", userSelected.getName())));
 

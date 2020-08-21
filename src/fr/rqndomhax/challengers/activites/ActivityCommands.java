@@ -42,15 +42,12 @@ public class ActivityCommands implements CommandExecutor {
         switch(args[0].toLowerCase()) {
 
             case "start":
-
                 return new Start(setup, sender, args).onCommand();
 
             case "pause":
-
                 return new Pause(setup, sender).onCommand();
 
             case "stop":
-
                 return new Stop(setup, sender).onCommand();
 
             case "setspawn":
@@ -58,23 +55,18 @@ public class ActivityCommands implements CommandExecutor {
                 break;
 
             case "add":
-
                 return new PlayersManager(setup, sender, args).onAdd();
 
             case "remove":
-
                 return new PlayersManager(setup, sender, args).onRemove();
 
             case "setpoint":
-
                 return new PlayersPointsManager(setup, sender, args).onSetPoints();
 
             case "addpoint":
-
                 return new PlayersPointsManager(setup, sender, args).onAddPoints();
 
             case "removepoints":
-
                 return new PlayersPointsManager(setup, sender, args).onRemovePoints();
 
             case "teamadd":

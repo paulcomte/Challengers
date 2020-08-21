@@ -9,8 +9,6 @@ public class Game {
 
     private GameState gameState;
     private final Set<PlayerData> players = new HashSet<>();
-    private boolean isVIPCooldownFinished = false;
-    private boolean isBodyGuardCooldownFinished = false;
 
     public GameState getGameState() {
         return gameState;
@@ -22,21 +20,5 @@ public class Game {
 
     public Set<PlayerData> getPlayers() {
         return players;
-    }
-
-    public void setVIPCooldownFinished(boolean VIPCooldownFinished) {
-        isVIPCooldownFinished    = VIPCooldownFinished;
-    }
-
-    public void setBodyGuardCooldownFinished(boolean bodyGuardCooldownFinished) {
-        isBodyGuardCooldownFinished = bodyGuardCooldownFinished;
-    }
-
-    public boolean isVIPCooldownFinished() {
-        return isVIPCooldownFinished;
-    }
-
-    public boolean isBodyGuardCooldownFinished() {
-        return isBodyGuardCooldownFinished;
     }
 }

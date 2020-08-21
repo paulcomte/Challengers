@@ -43,7 +43,7 @@ public class PlayersPointsManager {
             return null;
         }
 
-        if(playerData.getTeam() == null) {
+        if(playerData.getTeamData() == null) {
             sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.Teams.PlayerNeedToBeInTeam").replace("%player%", playerData.getName())));
             sender.sendMessage("WARNING: SI VOUS PENSEZ QU'IL Y A UN SOUCIS VEUILLEZ CONTACTER LE DEVELOPPEUR §e_Paul#6918");
             return null;
@@ -141,7 +141,7 @@ public class PlayersPointsManager {
 
         return message
                 .replace("%player%", playerData.getName())
-                .replace("%teamcolor%", playerData.getTeam().getChatColor() + "")
+                .replace("%teamcolor%", playerData.getTeamData().getTeam().getChatColor() + "")
                 .replace("%points%", String.valueOf(playerData.getPlayerPoints()));
 
     }

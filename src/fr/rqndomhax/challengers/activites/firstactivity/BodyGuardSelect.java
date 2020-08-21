@@ -39,7 +39,7 @@ public class BodyGuardSelect implements CommandExecutor {
             return false;
         }
 
-        if (setup.getGm().getGame().isBodyGuardCooldownFinished()) {
+        if (setup.getbG().isBodyGuardCooldownFinished()) {
             p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.BodyGuard.FinishedBG")));
         }
 
@@ -48,7 +48,7 @@ public class BodyGuardSelect implements CommandExecutor {
             return false;
         }
 
-        if (setup.getFm().getbSelected().contains(p.getUniqueId())) {
+        if (setup.getbG().getVotes().contains(playerData)) {
             p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.BodyGuard.AlreadySelected")));
             return false;
         }

@@ -4,7 +4,6 @@ import fr.rqndomhax.challengers.managers.PlayerData;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 public class TeamData {
 
@@ -17,14 +16,6 @@ public class TeamData {
     public TeamData(TeamList team, int teamMaxSize) {
         this.team = team;
         this.teamMaxSize = teamMaxSize;
-    }
-
-    public UUID getVip() {
-        return vip;
-    }
-
-    public void setVip(UUID vip) {
-        this.vip = vip;
     }
 
     public TeamList getTeam() {
@@ -61,9 +52,5 @@ public class TeamData {
 
     public void addTeamSize(int i) {
         teamSize = teamSize - i;
-    }
-
-    public Set<UUID> getBodyGuards() {
-        return bodyGuards;
     }
 }

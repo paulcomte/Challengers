@@ -57,6 +57,8 @@ Locations:
 Permissions:
   # Permission to use activity manager commands
   ActivityManager: "challengers.acmanager.use"
+  # Permission to get staff chat format
+  StaffChatFormat: "challengers.staffchat.use"
 
 Messages:
   # Message when the player hasn't the permission to run a command

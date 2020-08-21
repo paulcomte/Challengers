@@ -1,6 +1,5 @@
 package fr.rqndomhax.challengers.managers.team;
 
-import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
 import org.bukkit.Bukkit;
 
@@ -8,11 +7,6 @@ import org.bukkit.Bukkit;
 public class TeamManager {
 
     private final Team team = new Team();
-    private final Setup setup;
-
-    public TeamManager(Setup setup) {
-        this.setup = setup;
-    }
 
     // Method to add the player to a team.
     public void addToTeam(PlayerData playerData, TeamList team){
@@ -23,7 +17,6 @@ public class TeamManager {
         playerData.getTeamData().getMembers().add(playerData);
 
         playerData.getTeamData().addTeamSize(1);
-
 
         if(Bukkit.getOfflinePlayer(playerData.getUuid()).isOnline()) {
             Bukkit.getPlayer(playerData.getUuid()).setDisplayName(team.getChatColor() + playerData.getName());

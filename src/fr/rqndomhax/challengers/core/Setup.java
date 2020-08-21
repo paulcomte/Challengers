@@ -2,7 +2,7 @@ package fr.rqndomhax.challengers.core;
 
 import fr.rqndomhax.challengers.activites.ActivityCommands;
 import fr.rqndomhax.challengers.activites.firstactivity.*;
-import fr.rqndomhax.challengers.listeners.PlayerChat;
+import fr.rqndomhax.challengers.listeners.PlayerListener;
 import fr.rqndomhax.challengers.listeners.TeamListener;
 import fr.rqndomhax.challengers.managers.MessageManagers;
 import fr.rqndomhax.challengers.managers.PlayerData;
@@ -12,6 +12,8 @@ import fr.rqndomhax.challengers.managers.tasks.TaskManager;
 import fr.rqndomhax.challengers.managers.team.TeamData;
 import fr.rqndomhax.challengers.managers.team.TeamList;
 import fr.rqndomhax.challengers.managers.team.TeamManager;
+import fr.rqndomhax.challengers.scoreboard.TeamScoreboard;
+import fr.rqndomhax.challengers.utils.Tablist;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 
@@ -21,22 +23,26 @@ public class Setup {
     private final Core core;
     private final MessageManagers mm;
     private Bodyguard bG;
+    private VIP vip;
     private FirstM fm;
     private TeamManager tm;
     private GameManager gm;
     private TaskManager taskM;
+    private TeamScoreboard teamScoreboard;
 
     public Setup(Core core) {
         this.core = core;
         mm = new MessageManagers(core);
+        new Tablist().registerTab(core);
     }
 
     private void registerVars() {
-        tm = new TeamManager(this);
+        tm = new TeamManager();
         fm = new FirstM(this);
         gm = new GameManager(this);
         taskM = new TaskManager(this);
-        bG = new Bodyguard();
+        bG = new Bodyguard(this);
+        vip = new VIP(this);
     }
 
     // Register all plugin events
@@ -45,7 +51,7 @@ public class Setup {
 
         pm.registerEvents(new TeamListener(this), this.core);
         pm.registerEvents(new FirstAL(this), this.core);
-        pm.registerEvents(new PlayerChat(), this.core);
+        pm.registerEvents(new PlayerListener(this), this.core);
     }
 
     // Register all plugin commands
@@ -65,6 +71,11 @@ public class Setup {
         tm.getTeam().getTeams().add(new TeamData(TeamList.GREEN, 4));
         tm.getTeam().getTeams().add(new TeamData(TeamList.YELLOW, 4));
 
+    }
+
+    // Register scoreboard
+    private void registerScoreboard() {
+        teamScoreboard = new TeamScoreboard(this);
     }
 
     public void setup() {
@@ -94,6 +105,9 @@ public class Setup {
         tm.addToTeam(rushWay, TeamList.RED);
         tm.addToTeam(friendOne, TeamList.GREEN);
         tm.addToTeam(friendTwo, TeamList.CYAN);
+
+        registerScoreboard();
+        teamScoreboard.runBoard();
     }
 
     public Core getCore() {
@@ -122,5 +136,13 @@ public class Setup {
 
     public Bodyguard getbG() {
         return bG;
+    }
+
+    public VIP getVip() {
+        return vip;
+    }
+
+    public TeamScoreboard getTeamScoreboard() {
+        return teamScoreboard;
     }
 }

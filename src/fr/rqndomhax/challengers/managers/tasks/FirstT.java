@@ -19,7 +19,7 @@ public class FirstT extends BukkitRunnable {
     public void run() {
 
         // First task selecting a vip
-        if(!setup.getGm().getGame().isVIPCooldownFinished()) {
+        if(!setup.getVip().isVIPCooldownFinished()) {
             switch (i) {
 
                 case 30:
@@ -47,8 +47,8 @@ public class FirstT extends BukkitRunnable {
             }
 
             if (i == 120) {
-                setup.getGm().getGame().setVIPCooldownFinished(true);
-                setup.getGm().announceVIPFinished();
+                setup.getVip().setVIPCooldownFinished(true);
+                setup.getVip().announceVIPFinished();
                 i = 0;
             }
 
@@ -57,7 +57,7 @@ public class FirstT extends BukkitRunnable {
         }
 
         // Second task selecting a body guard
-        if(!setup.getGm().getGame().isBodyGuardCooldownFinished()) {
+        if(!setup.getbG().isBodyGuardCooldownFinished()) {
             switch (i) {
 
                 case 30:
@@ -85,8 +85,8 @@ public class FirstT extends BukkitRunnable {
             }
 
             if (i == 120) {
-                setup.getGm().getGame().setBodyGuardCooldownFinished(true);
-                setup.getGm().announceBGFinished();
+                setup.getbG().setBodyGuardCooldownFinished(true);
+                setup.getbG().announceBGFinished();
                 i = 0;
             }
 

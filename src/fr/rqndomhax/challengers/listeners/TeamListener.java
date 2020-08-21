@@ -2,6 +2,7 @@ package fr.rqndomhax.challengers.listeners;
 
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
+import fr.rqndomhax.challengers.managers.team.TeamData;
 import fr.rqndomhax.challengers.managers.team.TeamList;
 import fr.rqndomhax.challengers.utils.ItemBuilder;
 import org.bukkit.Bukkit;
@@ -46,18 +47,18 @@ public class TeamListener implements Listener {
         Inventory teamSelect = Bukkit.createInventory(null, 9, "• Menu d'équipe •");
 
         // Set items in inventory
-        for(TeamList teams : TeamList.values()) {
+        for(TeamData teamDatas : setup.getTm().getTeam().getTeams()) {
 
-            if (setup.getGm().getPlayerData(e.getPlayer().getUniqueId()).getTeamData().getTeam() == teams) {
-                teamSelect.setItem(teams.getSlot(), new ItemBuilder(Material.BANNER).setBannerColor(teams.getDyeColor())
-                        .setName(teams.getChatColor() + "Equipe " + teams.getName().toLowerCase())
+            if(teamDatas.getMembers().contains(setup.getGm().getPlayerData(e.getPlayer().getUniqueId()))) {
+                teamSelect.setItem(teamDatas.getTeam().getSlot(), new ItemBuilder(Material.BANNER).setBannerColor(teamDatas.getTeam().getDyeColor())
+                        .setName(teamDatas.getTeam().getChatColor() + "Equipe " + teamDatas.getTeam().getName().toLowerCase())
                         .addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1).hideEnchants()
-                        .setLore(setLore(teams))
+                        .setLore(setLore(teamDatas.getTeam()))
                         .toItemStack());
             } else {
-                teamSelect.setItem(teams.getSlot(), new ItemBuilder(Material.BANNER).setBannerColor(teams.getDyeColor())
-                        .setName(teams.getChatColor() + "Equipe " + teams.getName().toLowerCase())
-                        .setLore(setLore(teams))
+                teamSelect.setItem(teamDatas.getTeam().getSlot(), new ItemBuilder(Material.BANNER).setBannerColor(teamDatas.getTeam().getDyeColor())
+                        .setName(teamDatas.getTeam().getChatColor() + "Equipe " + teamDatas.getTeam().getName().toLowerCase())
+                        .setLore(setLore(teamDatas.getTeam()))
                         .toItemStack());
             }
 
@@ -116,6 +117,8 @@ public class TeamListener implements Listener {
         StringBuilder sb = new StringBuilder();
 
         for(PlayerData playerDatas : setup.getTm().getTeam(team).getMembers()) {
+
+            if(playerDatas.getName() == null) continue;
 
             sb.append(team.getChatColor()).append("• ").append(playerDatas.getName());
 

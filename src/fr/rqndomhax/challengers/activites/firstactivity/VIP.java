@@ -11,6 +11,7 @@ public class VIP {
     private final HashMap<TeamData, PlayerData> vips = new HashMap<>();
     private final HashSet<PlayerData> votes = new HashSet<>();
     private final HashMap<PlayerData, Integer> vipVotes = new HashMap<>();
+    private boolean isVIPCooldownFinished = false;
     private final Setup setup;
 
     public VIP(Setup setup) {
@@ -57,16 +58,6 @@ public class VIP {
     }
 
     public void setTeamVips() {
-
-        // for each de toutes les clés des hashmaps
-        // je compare les différentes clés, pour en récupérer les joueurs d'une team (foreach, pour toutes les teams)
-        // je récupère l'entier le plus haut / en random si 2 pareil, et je le put dans la hashmap de "teamdata, playerdata"
-
-        // for each get all keys and value in hashmap vipVotes
-        // for each team comparing all different keys
-        // get higher value, if same higher value, random it
-        // put in vips, the key and the value
-
         HashMap<PlayerData, Integer> datas = new HashMap<>();
 
         for (TeamData teamData : setup.getTm().getTeam().getTeams()) {
@@ -105,6 +96,14 @@ public class VIP {
         return votes;
     }
 
+    public void setVIPCooldownFinished(boolean VIPCooldownFinished) {
+        isVIPCooldownFinished = VIPCooldownFinished;
+    }
+
+    public HashMap<PlayerData, Integer> getVipVotes() {
+        return vipVotes;
+    }
+
     private List<PlayerData> getPlayerDatas(HashMap<PlayerData, Integer> datas, Map.Entry<PlayerData, Integer> entry) {
 
         ArrayList<PlayerData> pData = new ArrayList<>();
@@ -124,4 +123,20 @@ public class VIP {
             }
             return pData;
         }
+
+    public void announceVIPFinished() {
+
+        setTeamVips();
+
+        setup.getMm().VIPFinished();
+
+        for(TeamData teams : setup.getTm().getTeam().getTeams()) {
+            setup.getMm().VIPChose(getVips().get(teams), teams.getTeam());
+        }
+
+    }
+
+    public boolean isVIPCooldownFinished() {
+        return isVIPCooldownFinished;
+    }
 }

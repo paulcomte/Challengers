@@ -1,6 +1,7 @@
 package fr.rqndomhax.challengers.activites.firstactivity;
 
 import fr.rqndomhax.challengers.core.Setup;
+import fr.rqndomhax.challengers.managers.PlayerData;
 import fr.rqndomhax.challengers.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import java.util.Set;
-import java.util.UUID;
 
 public class VipSelect implements CommandExecutor {
 
@@ -32,17 +32,19 @@ public class VipSelect implements CommandExecutor {
 
         Player p = (Player)sender;
 
+        PlayerData playerData = setup.getGm().getPlayerData(p.getUniqueId());
 
-        if(setup.getGm().getGame().isVIPCooldownFinished()) {
+
+        if(setup.getVip().isVIPCooldownFinished()) {
             p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.VIP.AlreadyFinished")));
         }
 
-        if(!(setup.getTm().hasTeam(p.getUniqueId()))) {
-            p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.Team.NeedToBeInTeam")));
+        if(!(setup.getTm().hasTeam(playerData))) {
+            p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.Teams.NeedToBeInTeam")));
             return false;
         }
 
-        if (setup.getFm().getPVoting().contains(p.getUniqueId())) {
+        if (setup.getVip().getVotes().contains(playerData)) {
             p.sendMessage(setup.getCore().getConfig().getString("Messages.FirstAC.VIP.AlreadyVoted"));
             return false;
         }
@@ -50,18 +52,18 @@ public class VipSelect implements CommandExecutor {
         Inventory pInv = Bukkit.createInventory(null, 9, "Séléction d'un VIP");
 
         // Add players head
-        Set<UUID> playerTeam = setup.getTm().getTeam(setup.getGm().getPlayerData(p.getUniqueId()).getTeam()).getMembers();
+        Set<PlayerData> playerTeam = playerData.getTeamData().getMembers();
 
         if(playerTeam.isEmpty()) {
             p.sendMessage("Erreur interne, l'équipe est vide ! Veuillez contacter le développeur: §a_Paul#6918");
             return false;
         }
 
-        for(UUID players : playerTeam) {
+        for(PlayerData playerDatas : playerTeam) {
             pInv.addItem(new ItemBuilder(Material.SKULL_ITEM, 1, (short)3)
-                    .setSkullOwner(players)
-                    .setName(ChatColor.GOLD + "Voter pour » " + Bukkit.getOfflinePlayer(players).getName())
-                    .setLore(ChatColor.AQUA + "Nombre de votes » " + ChatColor.DARK_AQUA + setup.getFm().getVipVotes(players).getOrDefault(players, 0))
+                    .setSkullOwner(playerDatas.getUuid())
+                    .setName(ChatColor.GOLD + "Voter pour » " + playerDatas.getName())
+                    .setLore(ChatColor.AQUA + "Nombre de votes » " + ChatColor.DARK_AQUA + setup.getVip().getVipVotes().getOrDefault(playerDatas, 0))
                     .toItemStack());
         }
 
