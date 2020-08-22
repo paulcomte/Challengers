@@ -1,12 +1,11 @@
-package fr.rqndomhax.challengers.activites;
+package fr.rqndomhax.challengers.commands;
 
 import fr.rqndomhax.challengers.core.Setup;
+import fr.rqndomhax.challengers.managers.game.GameManager;
 import fr.rqndomhax.challengers.managers.game.GameState;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-
-import java.lang.reflect.InvocationTargetException;
 
 public class Start {
 
@@ -33,19 +32,20 @@ public class Start {
 
             if (Integer.parseInt(args[1]) != gs.getGameInt()) continue;
 
-            if (setup.getGm().getGame().getGameState() != GameState.WAITING) {
+            if (GameManager.INSTANCE.getGame().getGameState() != GameState.WAITING) {
                 sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.AlreadyRunning")));
                 return false;
             }
 
-            sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.ActivityStarted") + number + "."));
+            sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.ActivityStarted".replace("%number%", String.valueOf(number)))));
             Bukkit.broadcastMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.Start")));
 
-            try {
+            /*try {
                 setup.getTaskM().start(gs.getCustomClass());
             } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
                 e.printStackTrace();
             }
+             */
 
             Bukkit.broadcastMessage(this.a(setup.getCore().getConfig().getString(gs.getPath())));
             return true;

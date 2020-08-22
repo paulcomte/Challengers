@@ -1,4 +1,4 @@
-package fr.rqndomhax.challengers.activites;
+package fr.rqndomhax.challengers.commands;
 
 import fr.rqndomhax.challengers.core.Setup;
 import org.bukkit.command.CommandSender;

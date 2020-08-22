@@ -3,6 +3,7 @@ package fr.rqndomhax.challengers.activites.firstactivity;
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.inventory.RInventory;
 import fr.rqndomhax.challengers.managers.PlayerData;
+import fr.rqndomhax.challengers.managers.game.GameManager;
 import fr.rqndomhax.challengers.utils.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -25,7 +26,7 @@ public class IVIP extends RInventory {
 
         for(PlayerData playerDatas : teamPlayers) {
 
-            if(setup.getGm().getPlayerData(owner.getUniqueId()) == playerDatas) continue;
+            if(GameManager.INSTANCE.getPlayerData(owner.getUniqueId()) == playerDatas) continue;
 
             this.addItem(new ItemBuilder(Material.SKULL_ITEM, 1, (short)3)
                     .setSkullOwner(playerDatas.getUuid())
@@ -43,7 +44,7 @@ public class IVIP extends RInventory {
             e.setCancelled(true);
 
             setup.getVip().addVipVotes(playerData, 1);
-            setup.getVip().getVotes().add(setup.getGm().getPlayerData(owner.getUniqueId()));
+            setup.getVip().getVotes().add(GameManager.INSTANCE.getPlayerData(owner.getUniqueId()));
 
             owner.closeInventory();
             owner.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.VIP.VoteVip").replace("%player%", playerData.getName())));

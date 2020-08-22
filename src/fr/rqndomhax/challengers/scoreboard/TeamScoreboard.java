@@ -1,6 +1,7 @@
 package fr.rqndomhax.challengers.scoreboard;
 
 import fr.rqndomhax.challengers.core.Setup;
+import fr.rqndomhax.challengers.managers.game.GameManager;
 import fr.rqndomhax.challengers.managers.team.TeamData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -35,10 +36,10 @@ public class TeamScoreboard {
 
         // Set title according to the gamestate
 
-        switch(setup.getGm().getGame().getGameState()) {
+        switch(GameManager.INSTANCE.getGame().getGameState()) {
 
             case WAITING:
-                board.updateTitle(ChatColor.RED + "Challengers " + ChatColor.GOLD + "- " + ChatColor.GREEN + "Attente");
+                board.updateTitle(ChatColor.YELLOW + "Challengers " + ChatColor.GOLD + "- " + ChatColor.GREEN + "Attente");
                 break;
             case FIRSTAC:
                 board.updateTitle(ChatColor.RED + "Epreuve 1 " + ChatColor.GOLD + "- " + ChatColor.GREEN + "Escorte");
@@ -60,27 +61,13 @@ public class TeamScoreboard {
                 break;
         }
 
-        if(setup.getGm().getPlayerData(board.getPlayer().getUniqueId()) == null || setup.getGm().getPlayerData(board.getPlayer().getUniqueId()).getTeamData() == null) {
+        teamBoard(board);
 
-            getTeamsScoreboard(null, board, 1);
+    }
 
-            return;
-        }
+    private void teamBoard(FastBoard board) {
 
-        TeamData teamData = setup.getGm().getPlayerData(board.getPlayer().getUniqueId()).getTeamData();
-
-        board.updateLines(
-                "",
-                "Equipe : " + teamData.getTeam().getName(),
-                "Point d'équipe : " + teamData.getTeamPoints(),
-                "Point personnel : " + setup.getGm().getPlayerData(board.getPlayer().getUniqueId()).getPlayerPoints(),
-                "",
-                "",
-                "",
-                ""
-        );
-
-        getTeamsScoreboard(teamData, board, 6);
+        getTeamsScoreboard(board);
 
     }
 
@@ -93,14 +80,10 @@ public class TeamScoreboard {
         }, 0, 20);
     }
 
-    private void getTeamsScoreboard(TeamData teamData, FastBoard board, int fromSlot) {
+    private void getTeamsScoreboard(FastBoard board) {
 
         for(TeamData teamDatas : setup.getTm().getTeam().getTeams()) {
-
-            if(teamDatas == teamData) continue;
-
-            board.updateLine(fromSlot,teamDatas.getTeam().getChatColor() +teamDatas.getTeam().getName().toUpperCase() +" » " + teamDatas.getTeamPoints());
-            fromSlot++;
+            board.updateLines(teamDatas.getTeam().getChatColor() + teamDatas.getTeam().getName().toUpperCase() +" » " + teamDatas.getTeamPoints());
         }
     }
 

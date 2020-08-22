@@ -2,6 +2,7 @@ package fr.rqndomhax.challengers.activites.firstactivity;
 
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
+import fr.rqndomhax.challengers.managers.game.GameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -34,7 +35,7 @@ public class VipSelect implements CommandExecutor {
             p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.VIP.AlreadyFinished")));
         }
 
-        PlayerData playerData = setup.getGm().getPlayerData(p.getUniqueId());
+        PlayerData playerData = GameManager.INSTANCE.getPlayerData(p.getUniqueId());
 
 
         if(playerData == null) {

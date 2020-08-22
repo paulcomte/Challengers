@@ -1,7 +1,9 @@
-package fr.rqndomhax.challengers.activites;
+package fr.rqndomhax.challengers.activites.managers;
 
+import fr.rqndomhax.challengers.commands.ActivityCommands;
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
+import fr.rqndomhax.challengers.managers.game.GameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -38,12 +40,12 @@ public class PlayersManager {
 
         Player target = Bukkit.getPlayer(targetName);
 
-        if(setup.getGm().getPlayerData(target.getUniqueId()) != null) {
+        if(GameManager.INSTANCE.getPlayerData(target.getUniqueId()) != null) {
             sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.AlreadyPlaying").replace("%player%", target.getName())));
             return false;
         }
 
-        setup.getGm().getGame().getPlayers().add(new PlayerData(target.getUniqueId()));
+        GameManager.INSTANCE.getGame().getPlayers().add(new PlayerData(target.getUniqueId()));
         sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.NewPlayer").replace("%player%", target.getName())));
         target.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.NewPlayerToMessage")));
 
@@ -59,11 +61,11 @@ public class PlayersManager {
 
         String targetName = args[1];
 
-        PlayerData playerData = Bukkit.getPlayer(targetName) == null ? setup.getGm().getPlayerData(targetName) : setup.getGm().getPlayerData(Bukkit.getPlayer(targetName).getUniqueId());
+        PlayerData playerData = Bukkit.getPlayer(targetName) == null ? GameManager.INSTANCE.getPlayerData(targetName) : GameManager.INSTANCE.getPlayerData(Bukkit.getPlayer(targetName).getUniqueId());
 
         if(playerData == null) {
             sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.AlreadyNotPlaying")));
-            sender.sendMessage("WARNING : SI VOUS PENSEZ QUE C'EST UNE ERREURE VEUILLEZ CONTACTER LE DEVELOPPEUR §e_Paul#6918");
+            sender.sendMessage("§4WARNING : SI VOUS PENSEZ QUE C'EST UNE ERREURE VEUILLEZ CONTACTER LE DEVELOPPEUR §e_Paul#6918");
             return false;
         }
 
@@ -71,7 +73,7 @@ public class PlayersManager {
 
         UUID uuid = playerData.getUuid();
 
-        setup.getGm().getGame().getPlayers().remove(playerData);
+        GameManager.INSTANCE.getGame().getPlayers().remove(playerData);
         sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.RemovedPlayer")
                 .replace("%player%", targetName)));
 

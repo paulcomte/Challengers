@@ -2,6 +2,7 @@ package fr.rqndomhax.challengers.listeners;
 
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
+import fr.rqndomhax.challengers.managers.game.GameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -31,7 +32,7 @@ public class PlayerListener implements Listener {
             return;
         }
 
-        PlayerData playerData = setup.getGm().getPlayerData(e.getPlayer().getUniqueId());
+        PlayerData playerData = GameManager.INSTANCE.getPlayerData(e.getPlayer().getUniqueId());
 
         if (playerData == null) {
             e.setFormat(ChatColor.GRAY + e.getPlayer().getName() + ChatColor.GOLD + " » " + ChatColor.WHITE + e.getMessage());

@@ -16,7 +16,6 @@ public class PlayerData {
     private String name;
     private UUID uuid;
     private TeamData teamData = null;
-    private int playerPoints = 0;
 
     public PlayerData(UUID uuid) {
         this.uuid = uuid;
@@ -46,14 +45,6 @@ public class PlayerData {
 
     public void setTeamData(TeamData teamData) {
         this.teamData = teamData;
-    }
-
-    public int getPlayerPoints() {
-        return playerPoints;
-    }
-
-    public void setPlayerPoints(int playerPoints) {
-        this.playerPoints = playerPoints;
     }
 
     private String getName(String uuid) {

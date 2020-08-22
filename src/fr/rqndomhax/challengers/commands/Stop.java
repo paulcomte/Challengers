@@ -1,6 +1,7 @@
-package fr.rqndomhax.challengers.activites;
+package fr.rqndomhax.challengers.commands;
 
 import fr.rqndomhax.challengers.core.Setup;
+import fr.rqndomhax.challengers.managers.game.GameManager;
 import fr.rqndomhax.challengers.managers.game.GameState;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -17,18 +18,18 @@ public class Stop {
 
     public boolean onCommand() {
 
-        if(setup.getGm().getGame().getGameState() == GameState.WAITING) {
+        if(GameManager.INSTANCE.getGame().getGameState() == GameState.WAITING) {
             sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.NotRunning")));
             return false;
         }
 
         for(GameState games : GameState.values()) {
 
-            if(setup.getGm().getGame().getGameState() != games) continue;
+            if(GameManager.INSTANCE.getGame().getGameState() != games) continue;
             
             setup.getTaskM().getRunnable().cancel();
-            setup.getGm().getGame().setGameState(GameState.WAITING);
-            setup.getGm().toLobby(true);
+            GameManager.INSTANCE.getGame().setGameState(GameState.WAITING);
+            GameManager.INSTANCE.toLobby(true);
             sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.StoppedActivity")));
             return true;
         }

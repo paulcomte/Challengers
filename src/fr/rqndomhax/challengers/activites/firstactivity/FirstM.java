@@ -2,6 +2,7 @@ package fr.rqndomhax.challengers.activites.firstactivity;
 
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
+import fr.rqndomhax.challengers.managers.game.GameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -42,7 +43,7 @@ public class FirstM {
                 Integer.parseInt(yellowCords[2]));
 
 
-        for(PlayerData playerDatas : setup.getGm().getGame().getPlayers()) {
+        for(PlayerData playerDatas : GameManager.INSTANCE.getGame().getPlayers()) {
 
             if(Bukkit.getPlayer(playerDatas.getUuid()) == null) continue;
 

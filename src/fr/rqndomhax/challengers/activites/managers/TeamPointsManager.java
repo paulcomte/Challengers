@@ -1,5 +1,6 @@
-package fr.rqndomhax.challengers.activites;
+package fr.rqndomhax.challengers.activites.managers;
 
+import fr.rqndomhax.challengers.commands.ActivityCommands;
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
 import fr.rqndomhax.challengers.managers.team.TeamData;
@@ -32,29 +33,27 @@ public class TeamPointsManager {
 
         for(TeamData teamDatas : setup.getTm().getTeam().getTeams()) {
 
-            if(!teamDatas.getTeam().getName().equalsIgnoreCase(args[1])) continue;
+            if(!teamDatas.getTeam().getName().equalsIgnoreCase(teamTarget)) continue;
 
             teamData = teamDatas;
         }
 
         if(teamData == null) {
-            sender.sendMessage("WARNING: L'EQUIPE SPECIFIE N'EXISTE PAS");
-            sender.sendMessage("WARNING: VEUILLEZ VERIFIER SON NOM");
-            sender.sendMessage("WARNING: LISTE DES NOMS: §bBLEUE §cROUGE §aVERTE §eJAUNE");
-            sender.sendMessage("WARNING: SI VOUS PENSEZ QU'IL Y A UN SOUCIS VEUILLEZ CONTACTER LE DEVELOPPEUR §e_Paul#6918");
+            sender.sendMessage("§4WARNING: L'EQUIPE SPECIFIE N'EXISTE PAS");
+            sender.sendMessage("§4WARNING: VEUILLEZ VERIFIER SON NOM");
+            sender.sendMessage("§4WARNING: LISTE DES NOMS: §bBLEUE §cROUGE §aVERTE §eJAUNE");
+            sender.sendMessage("§4WARNING: SI VOUS PENSEZ QU'IL Y A UN SOUCIS VEUILLEZ CONTACTER LE DEVELOPPEUR §e_Paul#6918");
             return null;
         }
 
         if(Integer.parseInt(args[2]) < 0 || Integer.parseInt(args[2]) > 2147483645) {
-            sender.sendMessage("WARNING: VEUILLEZ SPECIFIER UN NOMBRE CORRECT");
-            sender.sendMessage("WARNING: LE NOMBRE DOIT ETRE COMPRIS ENTRE 0 & 2 147 483 644");
-            sender.sendMessage("WARNING: SI VOUS PENSEZ QU'IL Y A UN SOUCIS VEUILLEZ CONTACTER LE DEVELOPPEUR §e_Paul#6918");
+            sender.sendMessage("§4WARNING: VEUILLEZ SPECIFIER UN NOMBRE CORRECT");
+            sender.sendMessage("§4WARNING: LE NOMBRE DOIT ETRE COMPRIS ENTRE 0 & 2 147 483 644");
+            sender.sendMessage("§4WARNING: SI VOUS PENSEZ QU'IL Y A UN SOUCIS VEUILLEZ CONTACTER LE DEVELOPPEUR §e_Paul#6918");
             return null;
         }
 
         return teamData;
-
-
     }
 
     public boolean onAddPoints() {

@@ -62,17 +62,17 @@ Permissions:
 
 Messages:
   # Message when the player hasn't the permission to run a command
-  NotAllowed: "&4Erreur » Vous n'avez pas la permission d'éxécuter cette commande."
+  NotAllowed: "&5Erreur » Vous n'avez pas la permission d'éxécuter cette commande."
   # Message when a non player run the command
-  NotInstanced: "&4Erreur » Vous devez être un joueur pour pouvoir effectuer cette commande."
+  NotInstanced: "&5Erreur » Vous devez être un joueur pour pouvoir effectuer cette commande."
   # Message when the player doesn't exists
-  NotValid: "&4Erreur » Le joueur specifié n'est pas connecté sur le serveur."
+  NotValid: "&5Erreur » Le joueur specifié n'est pas connecté sur le serveur."
   # Message when the player isn't playing
-  NotPlaying: "&4Erreur » Vous devez être un challenger afin d'effectuer cette action."
+  NotPlaying: "&5Erreur » Vous devez être un challenger afin d'effectuer cette action."
   # Message when the player is already instanced
-  AlreadyPlaying: "&4Erreur » Le joueur &e%player% &4est déjà dans la liste des joueurs."
+  AlreadyPlaying: "&5Erreur » Le joueur &e%player% &4est déjà dans la liste des joueurs."
   # Message when the player is already not playing
-  AlreadyNotPlaying: "&4Erreur » Le joueur &e%player% &4n'est déjà pas un challenger."
+  AlreadyNotPlaying: "&5Erreur » Le joueur &e%player% &4n'est déjà pas un challenger."
   # Message when a new player has been added
   NewPlayer: "&2Vous venez d'ajouter le joueur &e%player% à la liste des challengers !"
   # Message to the player when it has been added
@@ -82,9 +82,9 @@ Messages:
   # Message to the player when it has been removed
   RemovedPlayerToMessage: "&2Vous venez d'être retiré de la liste des challengers !"
   # Message when the game is already running
-  AlreadyRunning: "&4Erreur » Une activité est déjà en cours... Pour en forcer l'arrêt veuillez exécuter la commande &e/ac stop. &cPEUT CORROMPRE LE JEU."
+  AlreadyRunning: "&5Erreur » Une activité est déjà en cours... Pour en forcer l'arrêt veuillez exécuter la commande &e/ac stop. &cPEUT CORROMPRE LE JEU."
   # Message when the game is already not running
-  NotRunning: "&4Erreur » Aucune activité n'est démarré."
+  NotRunning: "&5Erreur » Aucune activité n'est démarré."
   # Message when a player has started an activity
   ActivityStarted: "&2Vous venez de démarrer l'activité &e"
   # Message when the activity has been force stopped
@@ -121,11 +121,11 @@ Messages:
   SeTeamPointsToMessage: "&2Le nombre de point de votre équipe a été défini à &e%teampoints% points &2!"
 
   Teams:
-    AlreadyInTeam: "&4Erreur » Vous êtes déjà dans l'équipe » %teamcolor%%team%&4."
-    TeamIsFull: "&4Erreur » l'équipe » %teamcolor%%team% &4est complète."
+    AlreadyInTeam: "&5Erreur » Vous êtes déjà dans l'équipe » %teamcolor%%team%&4."
+    TeamIsFull: "&5Erreur » l'équipe » %teamcolor%%team% &4est complète."
     JoinedTheTeam: "&aVous avez rejoint l'équipe » %teamcolor%%team%&4."
-    NeedToBeInTeam : "&4Erreur » Vous devez être dans une équipe afin d'effectuer cette action."
-    PlayerNeedToBeInTeam : "&4Erreur » Le joueur » %player% doit être dans une équipe pour pouvoir effectuer cette action."
+    NeedToBeInTeam : "&5Erreur » Vous devez être dans une équipe afin d'effectuer cette action."
+    PlayerNeedToBeInTeam : "&5Erreur » Le joueur » %player% doit être dans une équipe pour pouvoir effectuer cette action."
 
   # Messages for the first Activity
   FirstAC:
@@ -134,21 +134,21 @@ Messages:
     # Timer in second, need to be a integer !
     TimerI: 240
     Teleported: "&aVous venez d'être téléporté pour la première épreuve. \nBonne chance !"
-    CannotVoteForYourself: "&4Erreur » Vous ne pouvez pas voter pour vous-même"
+    CannotVoteForYourself: "&5Erreur » Vous ne pouvez pas voter pour vous-même"
     VIP:
       VoteVip: "&aVous avez voté pour &e%player%"
-      AlreadyVoted: "&4Erreur » Vous avez déjà voté pour un VIP."
-      AlreadyFinished: "&4Erreur » La séléction des VIPS finis."
+      AlreadyVoted: "&5Erreur » Vous avez déjà voté pour un VIP."
+      AlreadyFinished: "&5Erreur » La séléction des VIPS finis."
       FinishedVIP: "&aLa salle des votes de VIP est close ! Les choix sont maintenant fait !"
       AnnounceWhoVIP: "&aLe VIP de l'équipe » %teamcolor%%team% est %teamcolor% %player% !"
     BodyGuard:
-      AlreadySelected: "&4Erreur » Vous avez déjà séléctionné vos deux gardes du corps."
+      AlreadySelected: "&5Erreur » Vous avez déjà séléctionné vos deux gardes du corps."
       Selected: "&aVous avez voté pour %player% en tant qu'un de vos gardes du corps !"
       AlreadySelectedAsBG: "&aVous avez déjà pour %player% en tant qu'un de vos gardes du corps !"
       FinishedBG: "&aLe choix des gardes du corps des VIP est terminé !"
       AnnounceWhoBG: "&aLe %number% garde du corp de l'équipe » %teamcolor%%team% est %teamcolor% %player% !"
-      NotSelectingBodyguards: "&4Erreur » La séléction des gardes du corps n'a pas débuté !"
-      NotTheVip: "&4Erreur » Vous n'êtes pas le VIP de votre équipe !"
+      NotSelectingBodyguards: "&5Erreur » La séléction des gardes du corps n'a pas débuté !"
+      NotTheVip: "&5Erreur » Vous n'êtes pas le VIP de votre équipe !"
 
 
   # Messages for the second activity

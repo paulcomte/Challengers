@@ -1,6 +1,6 @@
 package fr.rqndomhax.challengers.core;
 
-import fr.rqndomhax.challengers.activites.ActivityCommands;
+import fr.rqndomhax.challengers.commands.ActivityCommands;
 import fr.rqndomhax.challengers.activites.firstactivity.*;
 import fr.rqndomhax.challengers.inventory.RInventoryHandler;
 import fr.rqndomhax.challengers.inventory.RInventoryManager;
@@ -128,10 +128,6 @@ public class Setup {
         return mm;
     }
 
-    public GameManager getGm() {
-        return gm;
-    }
-
     public TaskManager getTaskM() {
         return taskM;
     }
@@ -151,4 +147,5 @@ public class Setup {
     public TeamScoreboard getTeamScoreboard() {
         return teamScoreboard;
     }
+
 }

@@ -62,34 +62,6 @@ public class TeamManager {
         return null;
     }
 
-    // Add player points and player's team
-    public void autoAddPoints(PlayerData playerData, int i) {
-        playerData.setPlayerPoints(playerData.getPlayerPoints() + i);
-        playerData.getTeamData().setTeamPoints(playerData.getTeamData().getTeamPoints() + i);
-    }
-
-    // Remove player points and player's team
-    public void autoRemovePoints(PlayerData playerData, int i) {
-        playerData.setPlayerPoints(playerData.getPlayerPoints() - i);
-        playerData.getTeamData().setTeamPoints(playerData.getTeamData().getTeamPoints() - i);
-    }
-
-    // Remove player points and player's team
-    public void autoSetPoints(PlayerData playerData, int i) {
-        playerData.getTeamData().setTeamPoints((playerData.getTeamData().getTeamPoints() - playerData.getPlayerPoints())+ i);
-        playerData.setPlayerPoints(i);
-    }
-
-    // Add team points
-    public void addTeamPoints(TeamList team, int i) {
-        getTeam(team).setTeamPoints(getTeam(team).getTeamPoints() + i);
-    }
-
-    // Remove team points
-    public void removeTeampoints(TeamList team, int i) {
-        getTeam(team).setTeamPoints(getTeam(team).getTeamPoints() - i);
-    }
-
     public Team getTeam() {
         return team;
     }

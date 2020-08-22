@@ -10,11 +10,14 @@ import java.util.UUID;
 
 public class GameManager {
 
+    public static GameManager INSTANCE;
+
     private final Game game = new Game();
     private final Setup setup;
 
     public GameManager(Setup setup) {
         this.setup = setup;
+        INSTANCE = this;
     }
 
     public Game getGame() {

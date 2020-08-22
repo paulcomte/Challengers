@@ -1,5 +1,7 @@
-package fr.rqndomhax.challengers.activites;
+package fr.rqndomhax.challengers.commands;
 
+import fr.rqndomhax.challengers.activites.managers.PlayersManager;
+import fr.rqndomhax.challengers.activites.managers.TeamPointsManager;
 import fr.rqndomhax.challengers.core.Setup;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -44,6 +46,9 @@ public class ActivityCommands implements CommandExecutor {
             case "start":
                 return new Start(setup, sender, args).onCommand();
 
+            case "next":
+                return new Next(setup, sender, args).onCommand();
+
             case "pause":
                 return new Pause(setup, sender).onCommand();
 
@@ -59,15 +64,6 @@ public class ActivityCommands implements CommandExecutor {
 
             case "remove":
                 return new PlayersManager(setup, sender, args).onRemove();
-
-            case "setpoint":
-                return new PlayersPointsManager(setup, sender, args).onSetPoints();
-
-            case "addpoint":
-                return new PlayersPointsManager(setup, sender, args).onAddPoints();
-
-            case "removepoints":
-                return new PlayersPointsManager(setup, sender, args).onRemovePoints();
 
             case "teamadd":
                 return new TeamPointsManager(setup, sender, args).onAddPoints();
