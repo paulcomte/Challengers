@@ -2,9 +2,9 @@ package fr.rqndomhax.challengers.core;
 
 import fr.rqndomhax.challengers.commands.ActivityCommands;
 import fr.rqndomhax.challengers.activites.firstactivity.*;
-import fr.rqndomhax.challengers.inventory.RInventoryHandler;
-import fr.rqndomhax.challengers.inventory.RInventoryManager;
-import fr.rqndomhax.challengers.inventory.RInventoryTask;
+import fr.rqndomhax.challengers.inventoryapi.RInventoryHandler;
+import fr.rqndomhax.challengers.inventoryapi.RInventoryManager;
+import fr.rqndomhax.challengers.inventoryapi.RInventoryTask;
 import fr.rqndomhax.challengers.listeners.PlayerListener;
 import fr.rqndomhax.challengers.listeners.TeamListener;
 import fr.rqndomhax.challengers.managers.MessageManagers;

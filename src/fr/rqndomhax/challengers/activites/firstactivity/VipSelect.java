@@ -1,6 +1,7 @@
 package fr.rqndomhax.challengers.activites.firstactivity;
 
 import fr.rqndomhax.challengers.core.Setup;
+import fr.rqndomhax.challengers.inventories.IVIP;
 import fr.rqndomhax.challengers.managers.PlayerData;
 import fr.rqndomhax.challengers.managers.game.GameManager;
 import org.bukkit.Bukkit;

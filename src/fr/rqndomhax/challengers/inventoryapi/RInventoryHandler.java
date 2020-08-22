@@ -1,4 +1,4 @@
-package fr.rqndomhax.challengers.inventory;
+package fr.rqndomhax.challengers.inventoryapi;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;

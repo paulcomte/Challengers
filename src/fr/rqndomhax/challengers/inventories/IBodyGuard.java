@@ -1,7 +1,7 @@
-package fr.rqndomhax.challengers.activites.firstactivity;
+package fr.rqndomhax.challengers.inventories;
 
 import fr.rqndomhax.challengers.core.Setup;
-import fr.rqndomhax.challengers.inventory.RInventory;
+import fr.rqndomhax.challengers.inventoryapi.RInventory;
 import fr.rqndomhax.challengers.managers.PlayerData;
 import fr.rqndomhax.challengers.utils.ItemBuilder;
 import org.bukkit.ChatColor;

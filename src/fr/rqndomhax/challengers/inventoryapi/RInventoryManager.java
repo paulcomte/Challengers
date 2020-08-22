@@ -1,4 +1,4 @@
-package fr.rqndomhax.challengers.inventory;
+package fr.rqndomhax.challengers.inventoryapi;
 
 import java.util.HashMap;
 import java.util.Map;
