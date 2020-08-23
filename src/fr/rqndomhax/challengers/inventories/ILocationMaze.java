@@ -11,7 +11,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.function.Consumer;
 
-public class ILocationMaze extends RInventory {
+public class ILocationMaze extends RInventory  {
 
     private final Setup setup;
     private final Player owner;

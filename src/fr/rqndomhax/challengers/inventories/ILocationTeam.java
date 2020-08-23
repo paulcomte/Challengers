@@ -34,24 +34,13 @@ public class ILocationTeam extends RInventory {
                     .toItemStack(), onClick(teamList));
         }
 
-
     }
 
     private Consumer<InventoryClickEvent> onClick(TeamList teamList) {
 
-        switch (activites) {
-
-            case CONVOY:
-                new ILocationConvoy(owner, setup, teamList, location).onClick();
-                break;
-
-        }
-
-
         return e -> {
-
+            activites.getCustomConsumer().accept(setup, owner, location, teamList);
         };
-
 
     }
 

@@ -1,7 +1,7 @@
 package fr.rqndomhax.challengers.scoreboard;
 
 import fr.rqndomhax.challengers.core.Setup;
-import fr.rqndomhax.challengers.managers.game.GameManager;
+import fr.rqndomhax.challengers.managers.game.GameState;
 import fr.rqndomhax.challengers.managers.team.TeamData;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,6 +15,7 @@ public class TeamScoreboard {
 
     private final Map<UUID, FastBoard> boards = new HashMap<>();
     private final Setup setup;
+    private int i;
 
     public TeamScoreboard(Setup setup) {
         this.setup = setup;
@@ -36,7 +37,7 @@ public class TeamScoreboard {
 
         // Set title according to the gamestate
 
-        switch(GameManager.INSTANCE.getGame().getGameState()) {
+        switch(setup.getGm().getGame().getGameState()) {
 
             case WAITING:
                 board.updateTitle(ChatColor.YELLOW + "Challengers " + ChatColor.GOLD + "- " + ChatColor.GREEN + "Attente");
@@ -71,11 +72,29 @@ public class TeamScoreboard {
 
     }
 
+    private void getCurrentScore(FastBoard board) {
+
+
+        i = i >= 30 ? 0 : i;
+    }
+
 
     public void runBoard() {
         Bukkit.getServer().getScheduler().runTaskTimerAsynchronously(setup.getCore(), () -> {
             for (FastBoard board : boards.values()) {
+
                 updateBoard(board);
+
+                if(setup.getGm().getGame().getGameState() == GameState.WAITING) {
+                    updateBoard(board);
+                }
+
+                if(i >= 15)
+                    teamBoard(board);
+                else
+                    getCurrentScore(board);
+
+                i++;
             }
         }, 0, 20);
     }

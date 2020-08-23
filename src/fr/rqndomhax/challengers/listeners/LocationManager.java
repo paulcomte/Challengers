@@ -27,10 +27,9 @@ public class LocationManager implements Listener {
 
         if(item.getType() != Material.ARROW) return;
 
-        if(!item.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + "Emplacement de téléportation")) return;
+        if(!item.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + "Gestionnaire des emplacements")) return;
 
         new ILocationMain(p, setup, e.getClickedBlock().getLocation());
-
 
     }
 

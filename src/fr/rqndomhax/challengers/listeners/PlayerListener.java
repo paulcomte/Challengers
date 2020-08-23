@@ -2,7 +2,6 @@ package fr.rqndomhax.challengers.listeners;
 
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
-import fr.rqndomhax.challengers.managers.game.GameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -21,7 +20,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
-        Bukkit.getScheduler().runTaskLaterAsynchronously(setup.getCore(), () -> setup.getTeamScoreboard().newTeamScoreboard(e.getPlayer()), 60);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(setup.getCore(), () -> setup.getTeamScoreboard().newTeamScoreboard(e.getPlayer()), 20);
     }
 
     @EventHandler
@@ -32,7 +31,7 @@ public class PlayerListener implements Listener {
             return;
         }
 
-        PlayerData playerData = GameManager.INSTANCE.getPlayerData(e.getPlayer().getUniqueId());
+        PlayerData playerData = setup.getGm().getPlayerData(e.getPlayer().getUniqueId());
 
         if (playerData == null) {
             e.setFormat(ChatColor.GRAY + e.getPlayer().getName() + ChatColor.GOLD + " » " + ChatColor.WHITE + e.getMessage());

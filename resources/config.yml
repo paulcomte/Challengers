@@ -37,17 +37,17 @@ Locations:
     WorldName: "world"
     coords: "0, 80, 0"
 
-  FirstAC:
-    redLoc:
+  Escorte:
+    red:
       WorldName: "world"
       coords: "100, 80, 92"
-    blueLoc:
+    blue:
       WorldName: "world"
       coords: "150, 80, 20"
-    greenLoc:
+    green:
       WorldName: "world"
       coords: "200, 80, 50"
-    yellowLoc:
+    yellow:
       WorldName: "world"
       coords: "500, 80, 10"
 

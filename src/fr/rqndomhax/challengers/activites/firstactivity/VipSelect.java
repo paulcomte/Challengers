@@ -3,14 +3,11 @@ package fr.rqndomhax.challengers.activites.firstactivity;
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.inventories.IVIP;
 import fr.rqndomhax.challengers.managers.PlayerData;
-import fr.rqndomhax.challengers.managers.game.GameManager;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 
 import java.util.Set;
 
@@ -36,7 +33,7 @@ public class VipSelect implements CommandExecutor {
             p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.VIP.AlreadyFinished")));
         }
 
-        PlayerData playerData = GameManager.INSTANCE.getPlayerData(p.getUniqueId());
+        PlayerData playerData = setup.getGm().getPlayerData(p.getUniqueId());
 
 
         if(playerData == null) {
@@ -53,8 +50,6 @@ public class VipSelect implements CommandExecutor {
             p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.VIP.AlreadyVoted")));
             return false;
         }
-
-        Inventory pInv = Bukkit.createInventory(null, 9, "Séléction d'un VIP");
 
         // Add players head
         Set<PlayerData> playerTeam = playerData.getTeamData().getMembers();

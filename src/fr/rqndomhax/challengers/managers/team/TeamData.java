@@ -1,7 +1,10 @@
 package fr.rqndomhax.challengers.managers.team;
 
+import fr.rqndomhax.challengers.managers.Activites;
 import fr.rqndomhax.challengers.managers.PlayerData;
+import org.bukkit.Location;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,11 +14,13 @@ public class TeamData {
     private Set<PlayerData> members = new HashSet<>();
     private int teamPoints;
     private final int teamMaxSize;
+    HashMap<Activites, Location> locations;
     private int teamSize = 0;
 
-    public TeamData(TeamList team, int teamMaxSize) {
+    public TeamData(TeamList team, int teamMaxSize, HashMap<Activites, Location> locations) {
         this.team = team;
         this.teamMaxSize = teamMaxSize;
+        this.locations = locations;
     }
 
     public TeamList getTeam() {
@@ -52,5 +57,9 @@ public class TeamData {
 
     public void addTeamSize(int i) {
         teamSize = teamSize - i;
+    }
+
+    public HashMap<Activites, Location> getLocations() {
+        return locations;
     }
 }

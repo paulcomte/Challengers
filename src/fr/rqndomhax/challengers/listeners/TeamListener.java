@@ -2,7 +2,6 @@ package fr.rqndomhax.challengers.listeners;
 
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
-import fr.rqndomhax.challengers.managers.game.GameManager;
 import fr.rqndomhax.challengers.managers.team.TeamData;
 import fr.rqndomhax.challengers.managers.team.TeamList;
 import fr.rqndomhax.challengers.utils.ItemBuilder;
@@ -37,7 +36,7 @@ public class TeamListener implements Listener {
         if (e.getItem().getType() != Material.BANNER) return;
         if (!e.getItem().getItemMeta().getDisplayName().substring(2).equalsIgnoreCase("Séléction d'équipe")) return;
 
-        if(GameManager.INSTANCE.getPlayerData(e.getPlayer().getUniqueId()) == null) {
+        if(setup.getGm().getPlayerData(e.getPlayer().getUniqueId()) == null) {
             e.getPlayer().sendMessage(this.a(setup.getCore().getConfig().getString("Messages.NotPlaying")));
             return;
         }
@@ -50,7 +49,7 @@ public class TeamListener implements Listener {
         // Set items in inventory
         for(TeamData teamDatas : setup.getTm().getTeam().getTeams()) {
 
-            if(teamDatas.getMembers().contains(GameManager.INSTANCE.getPlayerData(e.getPlayer().getUniqueId()))) {
+            if(teamDatas.getMembers().contains(setup.getGm().getPlayerData(e.getPlayer().getUniqueId()))) {
                 teamSelect.setItem(teamDatas.getTeam().getSlot(), new ItemBuilder(Material.BANNER).setBannerColor(teamDatas.getTeam().getDyeColor())
                         .setName(teamDatas.getTeam().getChatColor() + "Equipe " + teamDatas.getTeam().getName().toLowerCase())
                         .addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1).hideEnchants()
@@ -107,7 +106,7 @@ public class TeamListener implements Listener {
         }
 
         p.closeInventory();
-        setup.getTm().addToTeam(GameManager.INSTANCE.getPlayerData(p.getUniqueId()), team);
+        setup.getTm().addToTeam(setup.getGm().getPlayerData(p.getUniqueId()), team);
         p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.Teams.JoinedTheTeam")
                 .replace("%teamcolor%", team.getChatColor() + "")
                 .replace("%team%", team.getName())));

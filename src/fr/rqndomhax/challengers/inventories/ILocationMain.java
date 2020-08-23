@@ -29,7 +29,6 @@ public class ILocationMain extends RInventory {
         }
 
 
-
     }
 
     public Consumer<InventoryClickEvent> onClick(Activites activites) {
@@ -38,7 +37,7 @@ public class ILocationMain extends RInventory {
 
             if(activites.equals(Activites.MAZE)) {
 
-                new ILocationMaze(owner, setup, location).open();
+                activites.getCustomConsumer().accept(setup, owner, location, null);
 
             }
 

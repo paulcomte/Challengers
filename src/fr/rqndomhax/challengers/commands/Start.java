@@ -1,7 +1,6 @@
 package fr.rqndomhax.challengers.commands;
 
 import fr.rqndomhax.challengers.core.Setup;
-import fr.rqndomhax.challengers.managers.game.GameManager;
 import fr.rqndomhax.challengers.managers.game.GameState;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,7 +31,7 @@ public class Start {
 
             if (Integer.parseInt(args[1]) != gs.getGameInt()) continue;
 
-            if (GameManager.INSTANCE.getGame().getGameState() != GameState.WAITING) {
+            if (setup.getGm().getGame().getGameState() != GameState.WAITING) {
                 sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.AlreadyRunning")));
                 return false;
             }

@@ -43,6 +43,9 @@ public class ActivityCommands implements CommandExecutor {
 
         switch(args[0].toLowerCase()) {
 
+            case "locationset":
+                return new LocationCommand(setup, sender, args).onCommand();
+
             case "start":
                 return new Start(setup, sender, args).onCommand();
 

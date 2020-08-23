@@ -5,19 +5,18 @@ import fr.rqndomhax.challengers.managers.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 public class GameManager {
-
-    public static GameManager INSTANCE;
 
     private final Game game = new Game();
     private final Setup setup;
 
     public GameManager(Setup setup) {
         this.setup = setup;
-        INSTANCE = this;
     }
 
     public Game getGame() {
@@ -76,5 +75,40 @@ public class GameManager {
 
         }
 
+    }
+
+    private GameState getBy(int gameInt) {
+        return Arrays.stream(GameState.values()).filter(g -> g.getGameInt() == gameInt).findAny().orElse(GameState.WAITING);
+    }
+
+    public GameState next(Player player) {
+
+        switch (game.getGameState()) {
+
+            case WAITING:
+                game.setGameState(GameState.FIRSTAC);
+                break;
+            case FIRSTAC:
+
+                switch(game.getGameState().getGameState()) {
+
+                    case 0:
+                        game.setGameState(GameState.FIRSTAC.withGameState(GameState.FIRSTAC, 1));
+                        break;
+                    case 1:
+                        game.setGameState(GameState.FIRSTAC.withGameState(GameState.FIRSTAC, 2));
+                        break;
+                    case 2:
+                        game.setGameState(GameState.FIRSTAC.withGameState(GameState.FIRSTAC, 3));
+                        break;
+                    case 3:
+                        game.setGameState(GameState.SECONDAC);
+                        break;
+
+                }
+
+        }
+
+        return getBy(game.getGameState().getGameInt() + 1);
     }
 }

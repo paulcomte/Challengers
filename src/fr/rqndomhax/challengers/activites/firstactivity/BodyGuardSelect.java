@@ -3,7 +3,6 @@ package fr.rqndomhax.challengers.activites.firstactivity;
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.inventories.IBodyGuard;
 import fr.rqndomhax.challengers.managers.PlayerData;
-import fr.rqndomhax.challengers.managers.game.GameManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -34,7 +33,7 @@ public class BodyGuardSelect implements CommandExecutor {
             p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.BodyGuard.FinishedBG")));
         }
 
-        PlayerData playerData = GameManager.INSTANCE.getPlayerData(p.getUniqueId());
+        PlayerData playerData = setup.getGm().getPlayerData(p.getUniqueId());
 
         if(playerData == null) {
             p.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.NotPlaying")));

@@ -1,12 +1,14 @@
 package fr.rqndomhax.challengers.core;
 
-import fr.rqndomhax.challengers.commands.ActivityCommands;
 import fr.rqndomhax.challengers.activites.firstactivity.*;
+import fr.rqndomhax.challengers.commands.ActivityCommands;
 import fr.rqndomhax.challengers.inventoryapi.RInventoryHandler;
 import fr.rqndomhax.challengers.inventoryapi.RInventoryManager;
 import fr.rqndomhax.challengers.inventoryapi.RInventoryTask;
+import fr.rqndomhax.challengers.listeners.LocationManager;
 import fr.rqndomhax.challengers.listeners.PlayerListener;
 import fr.rqndomhax.challengers.listeners.TeamListener;
+import fr.rqndomhax.challengers.managers.Activites;
 import fr.rqndomhax.challengers.managers.MessageManagers;
 import fr.rqndomhax.challengers.managers.PlayerData;
 import fr.rqndomhax.challengers.managers.game.GameManager;
@@ -18,8 +20,10 @@ import fr.rqndomhax.challengers.managers.team.TeamManager;
 import fr.rqndomhax.challengers.scoreboard.TeamScoreboard;
 import fr.rqndomhax.challengers.utils.Tablist;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.plugin.PluginManager;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class Setup {
@@ -58,6 +62,7 @@ public class Setup {
         pm.registerEvents(new PlayerListener(this), this.core);
         pm.registerEvents(new RInventoryHandler(this.core, rInventoryManager), this.core);
         new RInventoryTask(new RInventoryManager()).runTaskTimerAsynchronously(this.core, 0, 1);
+        pm.registerEvents(new LocationManager(this), this.core);
     }
 
     // Register all plugin commands
@@ -72,10 +77,23 @@ public class Setup {
     // Create teams
     private void createTeams() {
 
-        tm.getTeam().getTeams().add(new TeamData(TeamList.RED, 4));
-        tm.getTeam().getTeams().add(new TeamData(TeamList.CYAN, 4));
-        tm.getTeam().getTeams().add(new TeamData(TeamList.GREEN, 4));
-        tm.getTeam().getTeams().add(new TeamData(TeamList.YELLOW, 4));
+        HashMap<Activites, Location> locations = new HashMap<>();
+
+        for(TeamList teamList : TeamList.values()) {
+
+            for(Activites activites : Activites.values()) {
+
+                String[] coords = core.getConfig().getString("Locations." + activites.getName() + "." + teamList.getPath() + ".coords").replaceAll(" ", "").split(",");
+
+                locations.put(activites, new Location(Bukkit.getWorld(core.getConfig().getString("Locations." + activites.getName() + "." + teamList.getPath() + ".WorldName"))
+                                                     , Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[1])));
+
+            }
+
+            tm.getTeam().getTeams().add(new TeamData(teamList, core.getConfig().getInt("Teams." + teamList.getPath() + "maxSlots"), locations));
+
+            locations.clear();
+        }
 
     }
 
@@ -122,6 +140,10 @@ public class Setup {
 
     public FirstM getFm() {
         return fm;
+    }
+
+    public GameManager getGm() {
+        return gm;
     }
 
     public MessageManagers getMm() {

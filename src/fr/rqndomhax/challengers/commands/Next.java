@@ -1,7 +1,6 @@
 package fr.rqndomhax.challengers.commands;
 
 import fr.rqndomhax.challengers.core.Setup;
-import fr.rqndomhax.challengers.managers.game.GameManager;
 import fr.rqndomhax.challengers.managers.game.GameState;
 import org.bukkit.command.CommandSender;
 
@@ -23,7 +22,7 @@ public class Next {
 
         for(GameState gameStates : GameState.values()) {
 
-            if(GameManager.INSTANCE.getGame().getGameState() != gameStates) continue;
+            if(setup.getGm().getGame().getGameState() != gameStates) continue;
 
             gameStates.next();
 
