@@ -3,10 +3,13 @@ package fr.rqndomhax.challengers.commands;
 import fr.rqndomhax.challengers.activites.managers.PlayersManager;
 import fr.rqndomhax.challengers.activites.managers.TeamPointsManager;
 import fr.rqndomhax.challengers.core.Setup;
+import fr.rqndomhax.challengers.managers.tasks.FirstT;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class ActivityCommands implements CommandExecutor {
 
@@ -50,7 +53,7 @@ public class ActivityCommands implements CommandExecutor {
                 return new Start(setup, sender, args).onCommand();
 
             case "next":
-                return new Next(setup, sender, args).onCommand();
+                return new Next(setup, sender).onCommand();
 
             case "pause":
                 return new Pause(setup, sender).onCommand();
@@ -78,7 +81,11 @@ public class ActivityCommands implements CommandExecutor {
                 return new TeamPointsManager(setup, sender, args).onSetPoints();
 
             case "admintest":
-                setup.getFm().teleport();
+                try {
+                    setup.getTaskM().start(FirstT.class);
+                } catch (IllegalAccessException | InstantiationException | InvocationTargetException e) {
+                    e.printStackTrace();
+                }
 
             default:
                 showHelp(sender, 1);

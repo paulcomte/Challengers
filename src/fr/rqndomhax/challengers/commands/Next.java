@@ -8,23 +8,25 @@ public class Next {
 
     private final Setup setup;
     private final CommandSender sender;
-    private final String[] args;
 
-    public Next(Setup setup, CommandSender sender, String[] args) {
+    public Next(Setup setup, CommandSender sender) {
         this.setup = setup;
         this.sender = sender;
-        this.args = args;
     }
 
 
     public boolean onCommand() {
 
+        if(setup.getGm().getGame().getGameState() == GameState.WAITING) {
+            sender.sendMessage("Aucune activité n'a débuté, veuillez en démarrer une à l'aide de /ac start <activity>");
+            return false;
+        }
 
         for(GameState gameStates : GameState.values()) {
 
             if(setup.getGm().getGame().getGameState() != gameStates) continue;
 
-            gameStates.next();
+            setup.getGm().next(sender);
 
         }
 

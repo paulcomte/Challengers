@@ -2,12 +2,12 @@ package fr.rqndomhax.challengers.managers.game;
 
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
+import fr.rqndomhax.challengers.managers.game.activitymanagers.*;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
-import java.util.Arrays;
 import java.util.UUID;
 
 public class GameManager {
@@ -25,9 +25,9 @@ public class GameManager {
 
     public PlayerData getPlayerData(UUID user) {
 
-        for(PlayerData players : game.getPlayers()) {
+        for (PlayerData players : game.getPlayers()) {
 
-            if(players.getUuid() != user) continue;
+            if (players.getUuid() != user) continue;
 
             return players;
 
@@ -38,9 +38,9 @@ public class GameManager {
 
     public PlayerData getPlayerData(String name) {
 
-        for(PlayerData players : game.getPlayers()) {
+        for (PlayerData players : game.getPlayers()) {
 
-            if(!players.getName().equalsIgnoreCase(name)) continue;
+            if (!players.getName().equalsIgnoreCase(name)) continue;
 
             return players;
 
@@ -59,56 +59,49 @@ public class GameManager {
                 Double.parseDouble(coords[1]),
                 Double.parseDouble(coords[2]));
 
-        if(hasBeenForceStopped)
-             message = setup.getCore().getConfig().getString("Messages.ActivityStopped");
+        if (hasBeenForceStopped)
+            message = setup.getCore().getConfig().getString("Messages.ActivityStopped");
+        else
+            message = setup.getCore().getConfig().getString("Messages.ActivityFinished"); //TODO in config
 
-        for(PlayerData playerDatas : game.getPlayers()) {
+        for (PlayerData playerDatas : game.getPlayers()) {
 
-            if(Bukkit.getPlayer(playerDatas.getUuid()) == null) continue;
+            if (Bukkit.getPlayer(playerDatas.getUuid()) == null) continue;
 
             Bukkit.getPlayer(playerDatas.getUuid()).teleport(location);
-            if(Bukkit.getPlayer(playerDatas.getUuid()).getGameMode() != GameMode.ADVENTURE)
+            if (Bukkit.getPlayer(playerDatas.getUuid()).getGameMode() != GameMode.ADVENTURE)
                 Bukkit.getPlayer(playerDatas.getUuid()).setGameMode(GameMode.ADVENTURE);
 
-            if(hasBeenForceStopped)
-                Bukkit.getPlayer(playerDatas.getUuid()).sendMessage(message);
+            Bukkit.getPlayer(playerDatas.getUuid()).sendMessage(message);
 
         }
 
     }
 
-    private GameState getBy(int gameInt) {
-        return Arrays.stream(GameState.values()).filter(g -> g.getGameInt() == gameInt).findAny().orElse(GameState.WAITING);
-    }
-
-    public GameState next(Player player) {
+    public void next(CommandSender sender) {
 
         switch (game.getGameState()) {
 
-            case WAITING:
-                game.setGameState(GameState.FIRSTAC);
-                break;
             case FIRSTAC:
+                new FirstACM(setup, sender).onCommand();
+                break;
 
-                switch(game.getGameState().getGameState()) {
+            case SECONDAC:
+                new SecondACM(setup, sender).onCommand();
+                break;
 
-                    case 0:
-                        game.setGameState(GameState.FIRSTAC.withGameState(GameState.FIRSTAC, 1));
-                        break;
-                    case 1:
-                        game.setGameState(GameState.FIRSTAC.withGameState(GameState.FIRSTAC, 2));
-                        break;
-                    case 2:
-                        game.setGameState(GameState.FIRSTAC.withGameState(GameState.FIRSTAC, 3));
-                        break;
-                    case 3:
-                        game.setGameState(GameState.SECONDAC);
-                        break;
+            case THIRDAC:
+                new ThirdACM(setup, sender).onCommand();
 
-                }
+            case FOURTHAC:
+                new FourthACM(setup, sender).onCommand();
+
+            case FIFTHAC:
+                new FifthACM(setup, sender).onCommand();
+
+            default:
+                break;
 
         }
-
-        return getBy(game.getGameState().getGameInt() + 1);
     }
 }

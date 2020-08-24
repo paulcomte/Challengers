@@ -62,7 +62,10 @@ public class TeamScoreboard {
                 break;
         }
 
-        teamBoard(board);
+        if(i < 15 || setup.getGm().getGame().getGameState() == GameState.WAITING)
+            teamBoard(board);
+        else
+            getCurrentScore(board);
 
     }
 
@@ -73,9 +76,10 @@ public class TeamScoreboard {
     }
 
     private void getCurrentScore(FastBoard board) {
-
-
         i = i >= 30 ? 0 : i;
+
+
+
     }
 
 

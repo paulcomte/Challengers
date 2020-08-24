@@ -5,13 +5,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public enum GameState {
     WAITING(),
-    FIRSTAC("Messages.FirstAC.Start", FirstT.class, 0),
-    SECONDAC("Messages.SecondAC.Start", SecondT.class, 0),
-    THIRDAC("Messages.ThirdAC.Start", ThirdT.class, 0),
-    FOURTHAC("Messages.FourthAC.Start", FourthT.class, 0),
-    FIFTHAC("Messages.FifthAC.Start", FifthT.class, 0);
+    FIRSTAC(1, "Messages.FirstAC.Start", FirstT.class, 0),
+    SECONDAC(2, "Messages.SecondAC.Start", SecondT.class, 0),
+    THIRDAC(3, "Messages.ThirdAC.Start", ThirdT.class, 0),
+    FOURTHAC(4, "Messages.FourthAC.Start", FourthT.class, 0),
+    FIFTHAC(5, "Messages.FifthAC.Start", FifthT.class, 0);
 
-    private int gameState;
+    private int gameInt;
+    private int currentState;
     private String path;
     private Class<? extends BukkitRunnable> runnable;
 
@@ -19,10 +20,10 @@ public enum GameState {
     GameState() {
     }
 
-    GameState(String path, Class<? extends BukkitRunnable> runnable, int gameState) {
+    GameState(int gameInt, String path, Class<? extends BukkitRunnable> runnable, int gameState) {
         this.path = path;
         this.runnable = runnable;
-        this.gameState = gameState;
+        this.currentState = gameState;
     }
 
     public String getPath() {
@@ -33,12 +34,16 @@ public enum GameState {
         return runnable;
     }
 
-    public int getGameState() {
-        return gameState;
+    public int getCurrentState() {
+        return currentState;
     }
 
     public GameState withGameState(GameState gameState, int gameState1) {
-        this.gameState = gameState1;
+        this.currentState = gameState1;
         return gameState;
+    }
+
+    public int getGameInt() {
+        return gameInt;
     }
 }

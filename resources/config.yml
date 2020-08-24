@@ -130,9 +130,8 @@ Messages:
   # Messages for the first Activity
   FirstAC:
     Start: "&aCombattantes, Combattants, Préparez vous, L'épreuve &en°1 &ava débuter !"
-    Timer: "&aLa salle des votes se fermera dans &b%timer%"
     # Timer in second, need to be a integer !
-    TimerI: 240
+    TimerI: 600
     Teleported: "&aVous venez d'être téléporté pour la première épreuve. \nBonne chance !"
     CannotVoteForYourself: "&5Erreur » Vous ne pouvez pas voter pour vous-même"
     VIP:

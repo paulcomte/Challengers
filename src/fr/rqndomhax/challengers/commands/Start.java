@@ -5,6 +5,7 @@ import fr.rqndomhax.challengers.managers.game.GameState;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class Start {
 
@@ -47,6 +48,7 @@ public class Start {
              */
 
             Bukkit.broadcastMessage(this.a(setup.getCore().getConfig().getString(gs.getPath())));
+            setup.getGm().next((Player) sender);
             return true;
 
         }
