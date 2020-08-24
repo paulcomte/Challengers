@@ -1,7 +1,9 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by Fernflower decompiler)
-//
+/*
+ * Copyright (c) 2020.
+ * Discord : _Paul#6918
+ * Author : RqndomHax
+ * Github: https://github.com/RqndomHax
+ */
 
 package fr.rqndomhax.challengers.utils;
 
