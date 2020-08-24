@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2020.
- * @Author RqndomHax
+ * @Author : RqndomHax
  */
 
 package fr.rqndomhax;
