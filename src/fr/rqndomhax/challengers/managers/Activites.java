@@ -24,7 +24,7 @@ public enum Activites {
     BUILD(Material.DIRT, ChatColor.DARK_RED + "Construction", (setup, player, location, teamList) -> {
 
     }),
-    ARENAMOB(Material.MONSTER_EGG, ChatColor.GREEN + "Arène infernale", (setup, player, location, teamList) -> {
+    ARENAMOB(Material.MONSTER_EGG, ChatColor.GREEN + "Arena", (setup, player, location, teamList) -> {
 
     });
 

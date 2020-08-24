@@ -17,15 +17,13 @@ public class ILocationMain extends RInventory {
     private final Location location;
 
     public ILocationMain(Player owner, Setup setup, Location location) {
-        super(owner, "Choisissez une activité", 9*3);
+        super(owner, "Choisissez une activité", 9);
         this.setup = setup;
         this.owner = owner;
         this.location = location;
 
         for(Activites activites :  Activites.values()) {
-
-            this.addItem(new ItemBuilder(activites.getMaterial()).setName(activites.getName()).toItemStack(), onClick(activites));
-
+                this.addItem(new ItemBuilder(activites.getMaterial()).setName(activites.getName()).toItemStack(), onClick(activites));
         }
 
 

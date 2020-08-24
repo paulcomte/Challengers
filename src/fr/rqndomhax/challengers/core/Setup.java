@@ -83,9 +83,9 @@ public class Setup {
 
             for(Activites activites : Activites.values()) {
 
-                String[] coords = core.getConfig().getString("Locations." + activites.getName() + "." + teamList.getPath() + ".coords").replaceAll(" ", "").split(",");
+                String[] coords = core.getConfig().getString("Locations." + activites.getName().substring(2) + "." + teamList.getPath() + ".coords").replaceAll(" ", "").split(",");
 
-                locations.put(activites, new Location(Bukkit.getWorld(core.getConfig().getString("Locations." + activites.getName() + "." + teamList.getPath() + ".WorldName"))
+                locations.put(activites, new Location(Bukkit.getWorld(core.getConfig().getString("Locations." + activites.getName().substring(2) + "." + teamList.getPath() + ".WorldName"))
                                                      , Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(coords[1])));
 
             }

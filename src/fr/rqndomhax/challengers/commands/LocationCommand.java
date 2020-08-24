@@ -7,6 +7,9 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class LocationCommand {
 
     private final Setup setup;
@@ -33,12 +36,14 @@ public class LocationCommand {
             return false;
         }
 
-        if(p.getInventory().getSize() >= 36) {
+        long playerInventorySize = Arrays.stream(p.getInventory().getContents()).filter(Objects::isNull).count();
+
+        if(playerInventorySize == 0) {
             sender.sendMessage("Votre inventaire est complet !");
             return false;
         }
 
-        p.getInventory().addItem(new ItemBuilder(Material.ARROW).setName(ChatColor.GOLD + "Gestionnaire des emplacements").toItemStack());
+        p.getInventory().addItem(new ItemBuilder(Material.NETHER_STAR).setName(ChatColor.GOLD + "Gestionnaire des emplacements").toItemStack());
         p.sendMessage("Vous avez reçu un item vous permettant de gérer l'emplacement de la configuration");
         p.sendMessage("Cliquez droit, sur un block pour que l'inventaire de la gestion des emplacements s'ouvre");
         return true;

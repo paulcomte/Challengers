@@ -32,12 +32,7 @@ public class ActivityCommands implements CommandExecutor {
             return false;
         }
 
-        if(args[0].equalsIgnoreCase("help") || args.length == 1) {
-
-            if(args.length == 1) {
-                showHelp(sender, 1);
-                return false;
-            }
+        if(args[0].equalsIgnoreCase("help")) {
 
             showHelp(sender, Integer.parseInt(args[1]));
 

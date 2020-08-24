@@ -25,11 +25,17 @@ public class LocationManager implements Listener {
 
         ItemStack item = e.getItem();
 
-        if(item.getType() != Material.ARROW) return;
+        if(item == null) return;
+
+        if(item.getType() != Material.NETHER_STAR) return;
+
+        if(!item.hasItemMeta()) return;
+
+        if(!item.getItemMeta().hasDisplayName()) return;
 
         if(!item.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD + "Gestionnaire des emplacements")) return;
 
-        new ILocationMain(p, setup, e.getClickedBlock().getLocation());
+        new ILocationMain(p, setup, e.getClickedBlock().getLocation()).open();
 
     }
 
