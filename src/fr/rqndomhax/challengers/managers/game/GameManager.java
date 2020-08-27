@@ -59,9 +59,9 @@ public class GameManager {
     public void toLobby(boolean hasBeenForceStopped) {
         String message = null;
 
-        String[] coords = setup.getCore().getConfig().getString("Lobby.coords").split(",");
+        String[] coords = setup.getCore().getConfig().getString("Locations.Lobby.coords").split(",");
 
-        Location location = new Location(Bukkit.getWorld(setup.getCore().getConfig().getString("Lobby.WorldName")),
+        Location location = new Location(Bukkit.getWorld(setup.getCore().getConfig().getString("Locations.Lobby.WorldName")),
                 Double.parseDouble(coords[0]),
                 Double.parseDouble(coords[1]),
                 Double.parseDouble(coords[2]));

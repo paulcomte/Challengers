@@ -12,7 +12,6 @@ import fr.rqndomhax.challengers.managers.game.GameState;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class Start {
 
@@ -28,6 +27,11 @@ public class Start {
 
     public boolean onCommand() {
 
+        if(args.length != 2) {
+            ActivityCommands.showHelp(sender, 1);
+            return false;
+        }
+
         int number = Integer.parseInt(args[1]);
 
         if(number > 5 || number < 1) {
@@ -37,15 +41,12 @@ public class Start {
 
         for (GameState gs : GameState.values()) {
 
-            if (Integer.parseInt(args[1]) != gs.getGameInt()) continue;
+            if (number != gs.getGameInt()) continue;
 
             if (setup.getGm().getGame().getGameState() != GameState.WAITING) {
                 sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.AlreadyRunning")));
                 return false;
             }
-
-            sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.ActivityStarted".replace("%number%", String.valueOf(number)))));
-            Bukkit.broadcastMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.Start")));
 
             /*try {
                 setup.getTaskM().start(gs.getCustomClass());
@@ -55,11 +56,12 @@ public class Start {
              */
 
             Bukkit.broadcastMessage(this.a(setup.getCore().getConfig().getString(gs.getPath())));
-            setup.getGm().next((Player) sender);
+            setup.getGm().getGame().setGameState(gs);
             return true;
 
         }
 
+        ActivityCommands.showHelp(sender, 1);
         return false;
     }
 

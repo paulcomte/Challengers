@@ -10,6 +10,7 @@ package fr.rqndomhax.challengers.activites.firstactivity;
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
 import fr.rqndomhax.challengers.managers.team.TeamData;
+import fr.rqndomhax.challengers.managers.team.TeamList;
 
 import java.util.*;
 
@@ -18,6 +19,7 @@ public class VIP {
     private final HashMap<TeamData, PlayerData> vips = new HashMap<>();
     private final HashSet<PlayerData> votes = new HashSet<>();
     private final HashMap<PlayerData, Integer> vipVotes = new HashMap<>();
+    private final Set<TeamList> votedTeams = new HashSet<>();
     private boolean isVIPCooldownFinished = false;
     private final Setup setup;
 
@@ -145,5 +147,21 @@ public class VIP {
 
     public boolean isVIPCooldownFinished() {
         return isVIPCooldownFinished;
+    }
+
+    public Set<TeamList> getVotedTeams() {
+        return votedTeams;
+    }
+
+    public Set<TeamList> getMissingTeams() {
+
+        Set<TeamList> missingVoteds = new HashSet<>();
+
+        for(TeamList teams : TeamList.values()) {
+            if (!votedTeams.contains(teams)) missingVoteds.add(teams);
+        }
+
+        return missingVoteds;
+
     }
 }

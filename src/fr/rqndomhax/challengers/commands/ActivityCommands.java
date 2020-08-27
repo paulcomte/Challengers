@@ -63,15 +63,20 @@ public class ActivityCommands implements CommandExecutor {
             case "stop":
                 return new Stop(setup, sender).onCommand();
 
-            case "setspawn":
-
-                break;
-
             case "add":
                 return new PlayersManager(setup, sender, args).onAdd();
 
             case "remove":
                 return new PlayersManager(setup, sender, args).onRemove();
+
+            case "openteam":
+                return new PlayersManager(setup, sender, args).onOpen();
+
+            case "closeteam":
+                return new PlayersManager(setup, sender, args).onClose();
+
+            case "setspawn":
+                break;
 
             case "teamadd":
                 return new TeamPointsManager(setup, sender, args).onAddPoints();
@@ -121,7 +126,7 @@ public class ActivityCommands implements CommandExecutor {
                 sender.sendMessage(ChatColor.DARK_GREEN + "/ac start 2" + ChatColor.WHITE + " - " + ChatColor.YELLOW + "Démarre l'épreuve " + ChatColor.DARK_AQUA + "du labyrinthe.");
                 sender.sendMessage(ChatColor.DARK_GREEN + "/ac start 3" + ChatColor.WHITE + " - " + ChatColor.YELLOW + "Démarre l'épreuve " + ChatColor.DARK_AQUA + "de la construction.");
                 sender.sendMessage(ChatColor.DARK_GREEN + "/ac start 4" + ChatColor.WHITE + " - " + ChatColor.YELLOW + "Démarre l'épreuve " + ChatColor.DARK_AQUA + "du parcours.");
-                sender.sendMessage(ChatColor.DARK_GREEN + "/ac start 5." + ChatColor.WHITE + " - " + ChatColor.YELLOW + "Démarre l'épreuve the " + ChatColor.DARK_AQUA + "de l'arène horrifique.");
+                sender.sendMessage(ChatColor.DARK_GREEN + "/ac start 5" + ChatColor.WHITE + " - " + ChatColor.YELLOW + "Démarre l'épreuve the " + ChatColor.DARK_AQUA + "de l'arène horrifique.");
                 sender.sendMessage("\n" +
                         "§4Plugin made by §cPaul COMTE §4All rights reserved");
                 break;
@@ -141,9 +146,6 @@ public class ActivityCommands implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "-=-=-=-" + ChatColor.DARK_RED + "PlayerManager Commands" + "-=-=-=-");
                 sender.sendMessage(ChatColor.DARK_GREEN + "/ac add <player>" + ChatColor.WHITE + " - " + ChatColor.YELLOW + "Ajoute un joueur au jeu. " + ChatColor.RED + " PEUT CORROMPRE LE JEU S'IL A DEJA DEMAREE");
                 sender.sendMessage(ChatColor.DARK_GREEN + "/ac remove <player>" + ChatColor.WHITE + " - " + ChatColor.YELLOW + "Supprime un joueur du jeu. " + ChatColor.RED + "PEUT CORROMPRE LE JEU S'IL A DEJA DEMAREE");
-                sender.sendMessage(ChatColor.DARK_GREEN + "/ac setpoint <player>" + ChatColor.WHITE + " - " + ChatColor.YELLOW + "Définis le nombre de point du joueur.");
-                sender.sendMessage(ChatColor.DARK_GREEN + "/ac addpoint <player>" + ChatColor.WHITE + " - " + ChatColor.YELLOW + "Ajoute un nombre de point au joueur.");
-                sender.sendMessage(ChatColor.DARK_GREEN + "/ac removepoint <player>" + ChatColor.WHITE + " - " + ChatColor.YELLOW + "Supprime un nombre de point du joueur. (ne peut être négatif)");
                 sender.sendMessage("\n" +
                         "§4Plugin made by §cPaul COMTE §4All rights reserved");
                 break;

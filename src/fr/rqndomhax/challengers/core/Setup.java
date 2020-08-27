@@ -90,6 +90,8 @@ public class Setup {
 
             for(Activites activites : Activites.values()) {
 
+                if(activites == Activites.ARENAMOB || activites == Activites.MAZE) continue;
+
                 String[] coords = core.getConfig().getString("Locations." + activites.getName().substring(2) + "." + teamList.getPath() + ".coords").replaceAll(" ", "").split(",");
 
                 locations.put(activites, new Location(Bukkit.getWorld(core.getConfig().getString("Locations." + activites.getName().substring(2) + "." + teamList.getPath() + ".WorldName"))

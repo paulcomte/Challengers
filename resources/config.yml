@@ -50,19 +50,6 @@ Locations:
     yellow:
       WorldName: "world"
       coords: "500, 80, 10"
-  Labyrinthe:
-    red:
-      WorldName: "world"
-      coords: "100, 80, 92"
-    blue:
-      WorldName: "world"
-      coords: "150, 80, 20"
-    green:
-      WorldName: "world"
-      coords: "200, 80, 50"
-    yellow:
-      WorldName: "world"
-      coords: "500, 80, 10"
   Parcours:
     red:
       WorldName: "world"
@@ -89,19 +76,6 @@ Locations:
       yellow:
         WorldName: "world"
         coords: "500, 80, 10"
-  Arena:
-    red:
-      WorldName: "world"
-      coords: "100, 80, 92"
-    blue:
-      WorldName: "world"
-      coords: "150, 80, 20"
-    green:
-      WorldName: "world"
-      coords: "200, 80, 50"
-    yellow:
-      WorldName: "world"
-      coords: "500, 80, 10"
   SecondAC:
 
 

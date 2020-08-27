@@ -105,8 +105,11 @@ public class TeamScoreboard {
 
     private void getTeamsScoreboard(FastBoard board) {
 
+        int i = 0;
+
         for(TeamData teamDatas : setup.getTm().getTeam().getTeams()) {
-            board.updateLines(teamDatas.getTeam().getChatColor() + teamDatas.getTeam().getName().toUpperCase() +" » " + teamDatas.getTeamPoints());
+            board.updateLine(i,teamDatas.getTeam().getChatColor() + teamDatas.getTeam().getName().toUpperCase() +" » " + teamDatas.getTeamPoints());
+            i++;
         }
     }
 

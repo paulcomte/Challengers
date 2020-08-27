@@ -42,7 +42,7 @@ public class ILocationMain extends RInventory {
 
             if(activites.equals(Activites.MAZE)) {
 
-                activites.getCustomConsumer().accept(setup, owner, location, null);
+                new ILocationMaze(owner, setup, location);
 
             }
 

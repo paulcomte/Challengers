@@ -46,7 +46,8 @@ public class ILocationTeam extends RInventory {
     private Consumer<InventoryClickEvent> onClick(TeamList teamList) {
 
         return e -> {
-            activites.getCustomConsumer().accept(setup, owner, location, teamList);
+
+            activites.getCustomInventory().accept(setup, owner, location, teamList);
         };
 
     }

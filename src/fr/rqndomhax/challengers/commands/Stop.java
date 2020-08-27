@@ -29,7 +29,8 @@ public class Stop {
             return false;
         }
 
-        setup.getTaskM().getRunnable().cancel();
+        if(setup.getTaskM().getRunnable() != null) setup.getTaskM().getRunnable().cancel();
+
         setup.getGm().getGame().setGameState(GameState.WAITING);
         setup.getGm().toLobby(true);
         sender.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.StoppedActivity")));

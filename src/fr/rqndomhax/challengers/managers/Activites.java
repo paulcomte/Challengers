@@ -8,7 +8,6 @@
 package fr.rqndomhax.challengers.managers;
 
 import fr.rqndomhax.challengers.core.Setup;
-import fr.rqndomhax.challengers.inventories.CustomConsumer;
 import fr.rqndomhax.challengers.inventories.ILocationConvoy;
 import fr.rqndomhax.challengers.inventories.ILocationMaze;
 import fr.rqndomhax.challengers.managers.team.TeamList;
@@ -31,18 +30,18 @@ public enum Activites {
     BUILD(Material.DIRT, ChatColor.DARK_RED + "Construction", (setup, player, location, teamList) -> {
 
     }),
-    ARENAMOB(Material.MONSTER_EGG, ChatColor.GREEN + "Arena", (setup, player, location, teamList) -> {
+    ARENAMOB(Material.MONSTER_EGG, ChatColor.GREEN + "Arène infernale", (setup, player, location, teamList) -> {
 
     });
 
     private final Material material;
     private final String name;
-    private final CustomConsumer<Setup, Player, Location, TeamList> customConsumer;
+    private final CustomConsumer<Setup, Player, Location, TeamList> customInventory;
 
-    Activites(Material material, String name, CustomConsumer<Setup, Player, Location, TeamList> customConsumer) {
+    Activites(Material material, String name, CustomConsumer<Setup, Player, Location, TeamList> customInventory) {
         this.material = material;
         this.name = name;
-        this.customConsumer = customConsumer;
+        this.customInventory = customInventory;
     }
 
     public Material getMaterial() {
@@ -53,7 +52,7 @@ public enum Activites {
         return name;
     }
 
-    public CustomConsumer<Setup, Player, Location, TeamList> getCustomConsumer() {
-        return customConsumer;
+    public CustomConsumer<Setup, Player, Location, TeamList> getCustomInventory() {
+        return customInventory;
     }
 }

@@ -10,6 +10,7 @@ package fr.rqndomhax.challengers.managers.game.activitymanagers;
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.game.GameState;
 import fr.rqndomhax.challengers.managers.tasks.FirstT;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
 import java.lang.reflect.InvocationTargetException;
@@ -26,6 +27,7 @@ public class FirstACM {
     }
 
     // TODO First activity command
+    // TODO Messages in config
 
     public void onCommand() {
 
@@ -34,24 +36,35 @@ public class FirstACM {
             case 0:
                 setup.getGm().getGame().setGameState(GameState.FIRSTAC.withGameState(GameState.FIRSTAC, 1));
                 sender.sendMessage("Vous venez de démarrer la séléction des vips");
+                Bukkit.broadcastMessage("La séléction des vips vient de démarrer !");
                 break;
+
             case 1:
 
-                if(!setup.getVip().isVIPCooldownFinished()) {
+                if(!setup.getVip().getMissingTeams().isEmpty()) {
                     sender.sendMessage("Impossible de passer à la séléction des gardes du corps, une équipe au moins n'a pas séléctionné de vip");
+                    sender.sendMessage("Liste des teams n'ayant pas choisis de vips :  ");
+                    setup.getVip().getMissingTeams().forEach(e -> sender.sendMessage(e.getChatColor() + e.getName()));
                     break;
                 }
+
+                setup.getVip().announceVIPFinished();
+                setup.getVip().setVIPCooldownFinished(true);
 
                 setup.getGm().getGame().setGameState(GameState.FIRSTAC.withGameState(GameState.FIRSTAC, 2));
                 sender.sendMessage("Vous venez de démarrer la séléction des gardes du corps");
                 break;
 
             case 2:
-                if(!setup.getbG().isBodyGuardCooldownFinished()) {
-                    sender.sendMessage("Impossible de passer au début de l'activité une équipe au moins n'a pas choisi de garde du corps");
+                if(!setup.getbG().getMissingTeams().isEmpty()) {
+                    sender.sendMessage("Impossible de passer à la séléction des gardes du corps, une équipe au moins n'a pas séléctionné de garde du corps");
+                    sender.sendMessage("Liste des teams n'ayant pas choisis de garde du corps :  ");
+                    setup.getbG().getMissingTeams().forEach(e -> sender.sendMessage(e.getChatColor() + e.getName()));
                     break;
                 }
 
+                setup.getbG().announceBGFinished();
+                setup.getbG().setBodyGuardCooldownFinished(true);
                 setup.getGm().getGame().setGameState(GameState.FIRSTAC.withGameState(GameState.FIRSTAC, 3));
 
                 try {
@@ -69,6 +82,7 @@ public class FirstACM {
 
             default:
                 sender.sendMessage("§4Erreur interne, veuillez contacter le développeur §e_Paul#6918 §4si cette erreur survient de nouveau");
+                sender.sendMessage("Code erreur : FirstACM" + setup.getGm().getGame().getGameState().getCurrentState());
                 break;
 
         }

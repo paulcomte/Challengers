@@ -51,6 +51,7 @@ public class IVIP extends RInventory {
 
             setup.getVip().addVipVotes(playerData, 1);
             setup.getVip().getVotes().add(setup.getGm().getPlayerData(owner.getUniqueId()));
+            setup.getVip().getVotedTeams().add(setup.getGm().getPlayerData(owner.getUniqueId()).getTeamData().getTeam());
 
             owner.closeInventory();
             owner.sendMessage(this.a(setup.getCore().getConfig().getString("Messages.FirstAC.VIP.VoteVip").replace("%player%", playerData.getName())));

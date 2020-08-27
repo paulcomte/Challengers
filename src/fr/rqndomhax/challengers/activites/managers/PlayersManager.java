@@ -10,10 +10,13 @@ package fr.rqndomhax.challengers.activites.managers;
 import fr.rqndomhax.challengers.commands.ActivityCommands;
 import fr.rqndomhax.challengers.core.Setup;
 import fr.rqndomhax.challengers.managers.PlayerData;
+import fr.rqndomhax.challengers.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
@@ -22,11 +25,47 @@ public class PlayersManager {
     private final CommandSender sender;
     private final Setup setup;
     private final String[] args;
+    ItemStack bannerTeam = new ItemBuilder(Material.BANNER).setName(ChatColor.GOLD + "Séléction d'équipe").toItemStack();
 
     public PlayersManager(Setup setup, CommandSender sender, String[] args) {
         this.sender = sender;
         this.setup = setup;
         this.args = args;
+    }
+
+    public boolean onOpen() {
+
+        for(PlayerData playerDatas : setup.getGm().getGame().getPlayers()) {
+
+            if(Bukkit.getPlayer(playerDatas.getUuid()) == null) continue;
+
+            if(Bukkit.getPlayer(playerDatas.getUuid()).getInventory().contains(bannerTeam)) continue;
+
+            Bukkit.getPlayer(playerDatas.getUuid()).getInventory().addItem(bannerTeam);
+            Bukkit.getPlayer(playerDatas.getUuid()).sendMessage("Vous venez de recevoir une bannière vous permettant de séléctionner votre équipe");
+        }
+
+        sender.sendMessage("Vous venez de donner la bannière de séléction d'équipe à tous les challengers");
+
+        return true;
+    }
+
+    public boolean onClose() {
+
+        for(PlayerData playerDatas : setup.getGm().getGame().getPlayers()) {
+
+            if(Bukkit.getPlayer(playerDatas.getUuid()) == null) continue;
+
+            if(!Bukkit.getPlayer(playerDatas.getUuid()).getInventory().contains(bannerTeam)) continue;
+
+            Bukkit.getPlayer(playerDatas.getUuid()).getInventory().remove(bannerTeam);
+            Bukkit.getPlayer(playerDatas.getUuid()).sendMessage("Vous n'avez maintenant plus la bannière vous permettant de séléctionner votre équipe");
+
+        }
+
+        sender.sendMessage("Vous venez de supprimer la bannière de séléction d'équipe de tous les challengers");
+
+        return true;
     }
 
 

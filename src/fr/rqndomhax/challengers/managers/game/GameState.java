@@ -28,6 +28,7 @@ public enum GameState {
     }
 
     GameState(int gameInt, String path, Class<? extends BukkitRunnable> runnable, int gameState) {
+        this.gameInt = gameInt;
         this.path = path;
         this.runnable = runnable;
         this.currentState = gameState;

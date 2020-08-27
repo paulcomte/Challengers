@@ -5,7 +5,7 @@
  * Github: https://github.com/RqndomHax
  */
 
-package fr.rqndomhax.challengers.inventories;
+package fr.rqndomhax.challengers.managers;
 
 public interface CustomConsumer<T, S, U, V> {
 
